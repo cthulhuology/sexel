@@ -1,0 +1,26 @@
+<script type="module">
+import { Sexel } from './sexel.mjs'
+const t = Sexel.tag('foo-bar',['email','name','address'],
+	{ 'ondraw':  function(){ 
+		this.innerHTML = `
+		<table>
+		<tbody>
+		<tr><td>Name:</td><td>${ this.name() }</td></tr>
+		<tr><td>Email:</td><td>${ this.email() }</td></tr>
+		<tr><td>Address</td><td><textarea>${this.address()}</textarea></td></tr>
+		</tbody>
+		</table>
+	` }})
+</script>
+
+<body>
+<div id="test">
+<foo-bar id="foo" 
+	name="bob" 
+	email="bob@example.com" 
+	address="742 Evergreen Tr. 12345 Springfield Tx USA">
+</foo-bar>
+</div>
+</body>
+
+

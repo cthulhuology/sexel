@@ -1,0 +1,30 @@
+{
+  "name": "sexel",
+  "version": "0.0.1",
+  "description": "Sexy HTML Elements",
+  "main": "sexel.mjs",
+  "type": "module",
+  "scripts": {
+    "test": "./test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cthulhology/sexel.git"
+  },
+  "keywords": [
+    "s-expressions",
+    "webcomponents",
+    "html",
+    "javascript"
+  ],
+  "author": "David Goehrig <dave@dloh.org>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cthulhology/sexel/issues"
+  },
+  "homepage": "https://github.com/cthulhology/sexel",
+  "dependencies": {
+    "express": "^4.19.2",
+    "ws": "^8.17.0"
+  }
+}
