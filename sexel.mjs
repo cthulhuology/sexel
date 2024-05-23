@@ -29,12 +29,21 @@ export class Sexel extends HTMLElement {
 		super()
 		const self = this
 		self.__proto__.constructor.obseveredAttributes = attributes
-		attributes.map( (k) => {
+		self._template = document.getElementById(element).content.cloneNode(true)
+		if (self._template) self.appendChild(self._template)
+		self._attributes = attributes.map( (k) => {
 			self[k] = function (v) {
 				if (v) self.setAttribute(k,v);
 				return self.getAttribute(k)
 			}
+			return k
 		})
+		self.ondraw = function() {
+			self._attributes.map( (k) => {
+				const v = self.querySelector('#'+k)
+				if (v) v.textContent = self[k]()
+			})
+		}
 		Object.entries(handlers).map( ([k,v])  => { self[k] = v })
 		return this;
 	}
