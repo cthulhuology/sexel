@@ -23,6 +23,8 @@
 // SOFTWARE. 
 //
 
+window.$ = function(x) { return document.getElementById(x) }
+
 export class Sexel extends HTMLElement {
 
 	constructor(element,attributes,handlers) {
@@ -78,3 +80,4 @@ Sexel.tag = function(tag,attributes,handlers) {
 	customElements.define(tag,c)
 	return c;
 }
+
