@@ -1,6 +1,6 @@
 {
   "name": "sexel",
-  "version": "0.0.1",
+  "version": "1.1.0",
   "description": "Sexy HTML Elements",
   "main": "sexel.mjs",
   "type": "module",
