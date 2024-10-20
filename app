@@ -21,7 +21,6 @@ const app = express()
 app.use(express.json())
 
 app.use(express.static(_dir ))
-
 app.get("/", (req,res) => {
 	res.sendFile(_dir + "/index.html")
 })

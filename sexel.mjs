@@ -30,7 +30,7 @@ export class Sexel extends HTMLElement {
 	constructor(element,attributes,handlers) {
 		super()
 		const self = this
-		self.__proto__.constructor.obseveredAttributes = attributes
+		self.__proto__.constructor.obsevredAttributes = attributes
 		self._template = document.getElementById(element).content.cloneNode(true)
 		if (self._template) self.appendChild(self._template)
 		self._attributes = attributes.map( (k) => {
@@ -46,7 +46,9 @@ export class Sexel extends HTMLElement {
 				if (v) v.textContent = self[k]()
 			})
 		}
-		Object.entries(handlers).map( ([k,v])  => { self[k] = v })
+		Object.entries(handlers).map( ([k,v]) => { 
+			self[k] =  (...e) => { v.apply(self,[self,...e]) }
+		})
 		return this;
 	}
 
@@ -81,3 +83,81 @@ Sexel.tag = function(tag,attributes,handlers) {
 	return c;
 }
 
+Object.prototype.list = function() {
+	return Array.prototype.slice.apply(this,[0])
+}
+
+Function.prototype.send = function(...args) {
+	return this.apply(this,...args)
+}
+
+Function.prototype.resend = function(message) {
+	return this.apply(this,message)
+}
+
+export const hub = (function() {
+	const self = function(method,...message) {
+		const selector = message[0]
+		const target = message[1]
+		switch(method) {
+		case 'subscribe':
+			if (typeof(self._queues[selector]) != 'object') self._queues[selector] =  []
+			if (typeof(self._queues[selector].indexOf(target) < 0)) self._queues[selector].push(target)
+			break
+		case 'unsubscribe':
+			if (typeof(self._queues[selector]) != 'object') return;
+			if (self._queues[selector].indexOf(target) <0) return;
+			self._queues[selector].splice(self._queues[selector.indexOf(target)],1)
+			break
+		default:
+			if (typeof(self._queues[method]) != 'object') return;
+			self._queues[method].map( (o) => { 
+				o.resend(message) 
+			})
+			break
+		}
+	}
+	self._queues = {}
+	return self
+})()
+
+Function.prototype.subscribe = function(method) {
+	hub('subscribe',method,this)
+}
+
+Function.prototype.unsubscribe = function(method) {
+	hub('unsubscribe',method,this)
+}
+
+Function.prototype.eval = function(json) {
+	return this.resend(JSON.parse(json))
+}
+
+export const sexp = function (proto) {
+	var self = function (op, ...args) {
+		if (this.hasOwnProperty(op) && typeof(this[op]) == 'function') return this[op].resend(args)
+		if (this.hasOwnProperty(op) && typeof(this[op]) == 'object') return self.apply(this[op], args)
+		return {}
+	}
+	return self.bind(proto)
+}
+
+export const handler = function(E) {
+	var S = sexp(E)
+	return window.fsm = (...M) => { return S.apply(null,M) }
+}
+
+// Work around for missing import link type, should work on most browsers
+const link = document.createElement('link')
+if (!('import' in link)) window.onload = async () => {
+	const parser = new DOMParser()
+	const links = document.querySelectorAll('link[rel="import"]')
+	for (const l of links) {
+		const url = l.href
+		const req = new Request(url)
+		const txt = await (await fetch(req)).text()
+		l.innerHTML = txt
+		const scripts = l.querySelectorAll('script')
+		for (const script of scripts) eval(script.textContent)
+	}
+}

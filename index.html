@@ -1,32 +1,293 @@
-
+<html>
+<head>
+<title>Sexel : the sexy webcomponent framework</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js" ></script>
+<script type="module" src="sexel.mjs"></script>
+<link rel="stylesheet" href="sexel.css" />
+<link rel="import" href="components/address.html" />
+<link rel="import" href="components/auth.html" />
+<link rel="import" href="components/button.html" />
+<link rel="import" href="components/card.html" />
+<link rel="import" href="components/carousel.html" />
+<link rel="import" href="components/chart.html" />
+<link rel="import" href="components/data.html" />
+<link rel="import" href="components/dialog.html" />
+<link rel="import" href="components/footer.html" />
+<link rel="import" href="components/form.html" />
+<link rel="import" href="components/header.html" />
+<link rel="import" href="components/menu.html" />
+<link rel="import" href="components/notification.html" />
+<link rel="import" href="components/progress.html" />
+<link rel="import" href="components/spinner.html" />
+<link rel="import" href="components/tabs.html" />
+<link rel="import" href="components/upload.html" />
 <script type="module">
-import { Sexel } from './sexel.mjs'
-const t = Sexel.tag('user-table',['email','name','address'],{
-	onclick: (e) => { console.log(e); alert('clicked')},
+import {handler} from './sexel.mjs'
+handler({
+	displayDialog: (self,e) => { $('dialog').open() },
+	Home: (self,e) => { console.log("Going Home") },
+	Dashboard: (self,e) => { console.log("Loading Dashboard") },
+	Profile: (self,e) => { console.log("Editing Profile") },
+	Settings: (self,e) => { console.log("Changing Settings") },
+	Logout: (self,e) => { console.log("Logging out...") },
+	Contact: (self,e) => { console.log("Contacting us...") },
+	Services: (self,e) => { console.log("Selecting Services") },
+	About: (self,e) => { $('about').open() },
+	error: (self,e) => { 
+		$('notification').open()
+		$('notification').type('error')
+		$('notification').message('An error occured. Please try again.') },
+	info: (self,e) => { 
+		$('notification').open()
+		$('notification').type('info')
+		$('notification').message('FYI: this is info') },
+	warning: (self,e) => { 
+		$('notification').open()
+		$('notification').type('warning')
+		$('notification').message('Danger Danger Danger!!!') },
+	success: (self,e) => { 
+		$('notification').open()
+		$('notification').type('success')
+		$('notification').message('Success!!!') },
+	submitForm: (values) => {
+		console.log("Form Submitted",values)
+	},
+	spinner: () => {
+		$('spinner').open()
+	},
 })
 </script>
-
-<template id="user-table">
-<table>
-<tbody>
-<tr><td>Name:</td><td id="name"></td></tr>
-<tr><td>Email:</td><td id="email"></td></tr>
-<tr><td>Address</td><td><textarea id="address"></textarea></td></tr>
-</tbody>
-</table>
-</template>
-
+</head>
 <body>
-<div id="test">
-<user-table id="foo" 
+<div id="main">
+<a id="a_header"></a>
+<sexel-header id="header" logo="/images/sexel.png" value="Sexel"></sexel-header>
+<div id="narrative">
+<span class="header">What is Sexel</span>
+<p>
+<a href="http://sexel.tech">Sexel</a> is a webcomponent framework that makes building
+dynamic distributed web applications easy. Using <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_components">Web Components</a> to build
+interfaces, Sexel combines block like construction with a 
+distributed <a href="">Finite State Machine</a> to model all
+application state transitions as messages.
+</p>
+<p>
+By building pages out of <a href="http://sexel.tech">Sexel</a> components 
+(as seen on the left) it is easy to put together polished user interfaces without
+having to code html, css, and javascript.  Using 
+<a href="http://sexel.tech">Sexel</a>'s finite state machine to model
+the interactions between the components, provides an easy to reason about
+approach to managing application state.  And using <a href="https://mesgd.org">mesgd</a>
+messaging, encryption, and authentication natively, you can produce secure
+distributed application out of the box.
+</p>
+<span class="header">What Components are Available?</span>
+<p>
+The list of supported components is changing on a regular basis. And writing
+new components is easy enough that even ChatGPT can write them for you! The
+current list available on this page are:
+</p>
+<ul>
+<li><a href="#a_address">address</a></li>  
+<li><a href="#a_barchart">bar chart</a></li>  
+<li><a href="#a_button">button</a></li>  
+<li><a href="#a_card">card</a></li>
+<li><a href="#a_carousel">carousel</a></li>
+<li><a href="#a_data">data / table</a></li>  
+<li><a href="#a_dialog" onclick='fsm("displayDialog")'>dialog</a></li>
+<li><a href="#a_footer">footer</a></li>  
+<li><a href="#a_form">form</a></li>
+<li><a href="#a_header">header</a></li>  
+<li><a href="#a_linechart">line chart</a></li>  
+<li><a href="#a_login">login / signup</a></li>  
+<li><a href="#a_menu">menu</a></li>
+<li><a href="#a_notification">notification</a></li>
+<li><a href="#a_piechart">pie chart</a></li>  
+<li><a href="#a_progress">progress bar</a></li>
+<li><a href="#a_spinner">spinner</a></li>
+<li><a href="#a_tabs">tabs</a></li>
+<li><a href="#a_upload">upload files</a></li>
+</ul>
+<span class="header">Getting Started</span>
+<p>
+
+</p>
+</div>
+<div id="content">
+<!-- a button -->
+<a id="a_button"><h1>Button</h1></a>
+<div style="margin: 30px">
+<sexel-button id="testButton" label="PRESS ME" action="displayDialog"></sexel-button>
+</div>
+
+<!-- login -->
+<a id="a_login"><h1>SignUp / Login</h1></a>
+<sexel-auth id="login" type="login" authTitle="Login"></sexel-auth>
+
+<!-- an address box -->
+<a id="a_address"><h1>Address</h1></a>
+<sexel-address id="foo" 
 	name="bob" 
 	email="bob@example.com" 
-	address="742 Evergreen Tr. 12345 Springfield Tx USA">
-</user-table>
+	address="742 Evergreen Tr.&#10;12345 Springfield Tx&#10;USA">
+</sexel-address>
 
-<user-table id="bar"></user-table>
+<!-- table -->
+<a id="a_data"><h1>Data</h1></a>
+<sexel-data 
+    header='["Year", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]'
+    data='[
+        ["2023", 12, 14, 13, 15, 14, 13, 12],
+        ["2022", 11, 13, 12, 14, 13, 12, 11],
+        ["2021", 10, 12, 11, 13, 12, 11, 10],
+        ["2020", 9, 11, 10, 12, 11, 10, 9],
+        ["2019", 8, 10, 9, 11, 10, 9, 8]
+    ]'>
+</sexel-data>
+
+
+<!-- bar chart -->
+<a id="a_barchart"><h1>Bar Chart</h1></a>
+<sexel-chart  id="barchart"
+    data='[12, 19, 3, 5, 2, 3]' 
+    key='["January", "February", "March", "April", "May", "June"]' 
+    colors='["red","orange","yellow","green","blue","indigo","violet"]'
+    type="bar">
+</sexel-chart>
+
+<!-- line chart -->
+<a id="a_linechart"><h1>Line Chart</h1></a>
+<sexel-chart  id="linechart"
+    data='[15, 25, 35, 45, 55, 65,84]' 
+    key='["Mon", "Tue", "Wed", "Thu", "Fri", "Sat","Sun"]' 
+    colors='["red","orange","yellow","green","blue","indigo","violet"]'
+    type="line">
+</sexel-chart>
+
+<!-- pie chart -->
+<a id="a_piechart"><h1>Pie Chart</h1></a>
+<sexel-chart  id="piechart"
+    data='[30, 70]' 
+    key='["Male", "Female"]' 
+    colors='["#0000FF", "#FFC0CB"]'
+    type="pie">
+</sexel-chart>
+
+<!-- menus -->
+<a id="a_menu"><h1>Menus</h1></a>
+<table>
+<tr>
+<td>
+<sexel-menu 
+    orientation="horizontal" 
+    items="Home, About, Services, Contact">
+</sexel-menu>
+</td>
+<td>
+<sexel-menu 
+    orientation="vertical" 
+    items="Dashboard, Profile, Settings, Logout">
+</sexel-menu>
+</td>
+</tr>
+</table>
+
+<!-- progress -->
+<a id="a_progress"><h1>Progress Bar</h1></a>
+<sexel-progress 
+	id="progress" 
+	value="30" 
+	max="100" 
+	label="30% Complete">
+</sexel-progress>
+
+<!-- upload -->
+<a id="a_upload"><h1>File Upload</h1></a>
+<sexel-upload 
+	id="fileUploader" 
+	label="Select Files" 
+	multiple="true" 
+	accept=".png,.jpg,.jpeg,.pdf">
+</sexel-upload>
+
+<!-- notification -->
+<a id="a_notification"><h1>Notification</h1></a>
+<sexel-notification id="notification"
+    title="Error" 
+    message="An error occurred. Please try again." 
+    type="error" 
+    dismissable="true">
+</sexel-notification>
+<sexel-menu items="error, warning, info, success"></sexel-menu>
+
+<!-- tabs -->
+<a id="a_tabs"><h1>Tabs</h1></a>
+<sexel-tabs 
+    tabs='[
+        { "label": "Tab 1", "color": "#e7f3fe", "content": "<p>Content for Tab 1</p>" },
+        { "label": "Tab 2", "color": "#e6ffed", "content": "<sexel-button label=\"Click Me\" action=\"Home\"></sexel-button>" },
+
+        { "label": "Tab 3", "color": "#fff3cd", "content": "<img src=\"images/sexel.png\" width=64 height=64>" }
+    ]'>
+</sexel-tabs>
+
+<!-- form -->
+<a id="a_form"><h1>Form</h1></a>
+<sexel-form 
+	action="submitForm"
+	fields='{
+		"Name": "text",
+		"Email": "email",
+		"Password": "password",
+		"Age": "number"
+	}'>
+</sexel-form>
+
+<!-- spinner  -->
+<a id="a_spinner"><h1>Spinner</h1></a>
+<sexel-spinner shown="true"></sexel-spinner>
+
+<!-- card -->
+<a id="a_card"><h1>Card</h1></a>
+<sexel-card header="Custom Cards">
+    <p>This card can contain any HTML content.</p>
+    <sexel-button label="Click Me" action="displayDialog" id="cardButton"></sexel-button>
+</sexel-card>
+
+<!-- carousel -->
+<a id="a_carousel"><h1>Carousel</h1></a>
+<sexel-carousel delay="5000">
+    <div class="carousel-slide">
+        <img src="images/image1.png" alt="Slide 1" style="width:100%">
+    </div>
+    <div class="carousel-slide">
+        <img src="images/image2.png" alt="Slide 2" style="width:100%">
+    </div>
+    <div class="carousel-slide">
+        <img src="images/image3.png" alt="Slide 3" style="width:100%">
+    </div>
+</sexel-carousel>
+
+<!-- popup dialog -->
+<sexel-dialog  id="dialog"
+    okLabel="Confirm" 
+    cancelLabel="Dismiss" 
+    label="Confirmation Required"
+    message="Are you sure you want to proceed with this action?">
+</sexel-dialog>
+
+<!-- about dialog -->
+<sexel-dialog id="about"
+	okLabel="OK"
+	cancelLabel="Dismiss"
+	label="About Sexel"
+	message='Sexel: the sexy webcomponent framework, under MIT License'>
+</sexel-dialog>	
+</div>
+
+<!-- footer -->
+<a id="a_footer"></a>
+<sexel-footer id="footer"></sexel-footer>
 </div>
 </body>
-
-
-
+</html>

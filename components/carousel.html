@@ -1,0 +1,80 @@
+<script>
+    // Define the 'sexel-carousel' component using the Sexel framework
+    Sexel.tag('sexel-carousel', ['delay'], {
+        ondraw: (self) => {
+            const carousel = self.querySelector('#carousel');
+	    const children = Array.from(self.children)
+	    for (const child of children) {
+		console.log(child, child.className)
+		if (child.id =="carousel") break;
+		carousel.appendChild(child.cloneNode(true))
+		self.removeChild(child)
+	    }
+            const slides = Array.from(carousel.querySelectorAll('.carousel-slide'));
+		console.log(slides)
+            let currentIndex = 0;
+            let intervalId;
+
+            // Get the delay time from the attribute or default to 3000ms (3 seconds)
+            const delay = parseInt(self.delay()) || 3000;
+
+            // Function to show the current slide and hide others
+            const showSlide = (index) => {
+                slides.forEach((slide, i) => {
+                    slide.style.display = (i === index) ? 'block' : 'none';
+                });
+            };
+
+            // Function to move to the next slide
+            const nextSlide = () => {
+                currentIndex = (currentIndex + 1) % slides.length;  // Loop back to the first slide
+                showSlide(currentIndex);
+            };
+
+            // Initialize the carousel by showing the first slide
+            showSlide(currentIndex);
+
+            // Start the automatic slide rotation
+            const startCarousel = () => {
+                intervalId = setInterval(nextSlide, delay);
+            };
+
+            // Stop the carousel (optional if you need to control it)
+            const stopCarousel = () => {
+                clearInterval(intervalId);
+            };
+
+            // Start the carousel
+            startCarousel();
+        }
+    });
+</script>
+
+<style>
+    /* Basic carousel container styling */
+    #carousel {
+     /*   position: relative; */
+        max-width: 600px; */
+        overflow: hidden;
+        margin: 0 auto;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Carousel slide styling */
+    .carousel-slide {
+        display: none;
+        transition: opacity 1s ease-in-out;
+    }
+
+    /* Active slide */
+    .carousel-slide.active {
+        display: block;
+    }
+</style>
+
+<template id="sexel-carousel">
+    <div id="carousel">
+    </div>
+</template>
+
