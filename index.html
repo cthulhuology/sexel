@@ -2,6 +2,10 @@
 <head>
 <title>Sexel : the sexy webcomponent framework</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js" ></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/javascript.min.js"></script>
+<script>hljs.highlightAll();</script>
 <script type="module" src="sexel.mjs"></script>
 <link rel="stylesheet" href="sexel.css" />
 <link rel="import" href="components/address.html" />
@@ -10,6 +14,7 @@
 <link rel="import" href="components/card.html" />
 <link rel="import" href="components/carousel.html" />
 <link rel="import" href="components/chart.html" />
+<link rel="import" href="components/code.html" />
 <link rel="import" href="components/data.html" />
 <link rel="import" href="components/dialog.html" />
 <link rel="import" href="components/footer.html" />
@@ -93,6 +98,7 @@ current list available on this page are:
 <li><a href="#a_button">button</a></li>  
 <li><a href="#a_card">card</a></li>
 <li><a href="#a_carousel">carousel</a></li>
+<li><a href="#a_code">code</a></li>
 <li><a href="#a_data">data / table</a></li>  
 <li><a href="#a_dialog" onclick='fsm("displayDialog")'>dialog</a></li>
 <li><a href="#a_footer">footer</a></li>  
@@ -110,8 +116,71 @@ current list available on this page are:
 </ul>
 <span class="header">Getting Started</span>
 <p>
-
+<a href="http://sexel.tech">Sexel</a> uses HTML5 import links to include components
+on a page.  As long as you include 
 </p>
+<sexel-code language="html">
+&lt;script type="module" src="sexel.mjs"&gt;&lt;/script&gt;
+&lt;link rel="import" href="components/button.html" /&gt;
+</sexel-code>
+<p>
+It will make the component on the page.  You can then create
+instances in the page using the custom HTML tags registered by
+each component.  For example, we can create two buttons using the following HTML:
+</p>
+<sexel-code language="html">
+&lt;sexel-button id="testButton" label="Cancel" action="cancel"&gt;&lt;/sexel-button&gt;
+&lt;sexel-button id="testButton" label="OK" action="ok"&gt;&lt;/sexel-button&gt;
+</sexel-code>
+<p>
+All interactive components send messages to the <b>Finite State Machine  (fsm)</b>
+which models all of the state changes in the application.  You can register your
+own even handlers with the handler function as follows:
+</p>
+<sexel-code language="javascript">
+handler({
+	cancel: (e) => { alert("Cancel Pressed") },
+	ok: (e) => { alert("OK Pressed") },
+})
+</sexel-code>
+<p>
+Some of the components use external 3rd party Javascript Libraries. If you want
+to use the charting components or the code component you should include the following
+in your webpage:
+<ul>
+<li><a href="https://chartjs.org">Chart.js</a></li>
+<li><a href="https://highlightjs.org">Highlight.js</a></li>
+</ul>
+<p>
+If you would like to get the latest source code of the framework it can be found
+at: <a href="https://github.com/cthulhuology/sexel">https://github.com/cthulhuology/sexel</a>
+</p>
+<span class="header">Component Documentation</span>
+<p><b>Coming Soon to a web page near you...</b></p>
+<span class="header">License</span>
+<pre>
+MIT License 
+
+Copyright (c) 2024 David J. Goehrig <dave@dloh.org> 
+
+Permission is hereby granted, free of charge, to any person obtaining a copy 
+of this software and associated documentation files (the "Software"), to deal 
+in the Software without restriction, including without limitation the rights 
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
+copies of the Software, and to permit persons to whom the Software is 
+furnished to do so, subject to the following conditions: 
+
+The above copyright notice and this permission notice shall be included in all 
+copies or substantial portions of the Software. 
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
+SOFTWARE. 
+</pre>
 </div>
 <div id="content">
 <!-- a button -->
@@ -267,6 +336,15 @@ current list available on this page are:
         <img src="images/image3.png" alt="Slide 3" style="width:100%">
     </div>
 </sexel-carousel>
+
+<!-- code -->
+<a id="a_code"><h1>Code</h1></a>
+<sexel-code language="javascript">
+    // This is a sample JavaScript code
+    function sayHello() {
+        console.log("Hello, world!");
+    }
+</sexel-code>
 
 <!-- popup dialog -->
 <sexel-dialog  id="dialog"
