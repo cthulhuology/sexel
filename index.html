@@ -9,23 +9,36 @@
 <script type="module" src="sexel.mjs"></script>
 <link rel="stylesheet" href="sexel.css" />
 <link rel="import" href="components/address.html" />
+<link rel="import" href="components/audio.html" />
 <link rel="import" href="components/auth.html" />
+<link rel="import" href="components/avatar.html" />
+<link rel="import" href="components/breadcrumb.html" />
 <link rel="import" href="components/button.html" />
 <link rel="import" href="components/card.html" />
 <link rel="import" href="components/carousel.html" />
 <link rel="import" href="components/chart.html" />
+<link rel="import" href="components/chat.html" />
+<link rel="import" href="components/clock.html" />
 <link rel="import" href="components/code.html" />
 <link rel="import" href="components/data.html" />
+<link rel="import" href="components/date.html" />
 <link rel="import" href="components/dialog.html" />
 <link rel="import" href="components/footer.html" />
 <link rel="import" href="components/form.html" />
+<link rel="import" href="components/grid.html" />
 <link rel="import" href="components/header.html" />
+<link rel="import" href="components/list.html" />
 <link rel="import" href="components/menu.html" />
 <link rel="import" href="components/notification.html" />
 <link rel="import" href="components/progress.html" />
+<link rel="import" href="components/rating.html" />
+<link rel="import" href="components/sidebar.html" />
+<link rel="import" href="components/slider.html" />
 <link rel="import" href="components/spinner.html" />
+<link rel="import" href="components/search.html" />
 <link rel="import" href="components/tabs.html" />
 <link rel="import" href="components/upload.html" />
+<link rel="import" href="components/video.html" />
 <script type="module">
 import {handler} from './sexel.mjs'
 handler({
@@ -62,12 +75,18 @@ handler({
 	},
 })
 </script>
+<style>
+.0 { grid-column: 1; grid-row: 1; padding: 20px; }
+.1 { grid-column: 2; grid-row: 1; padding: 20px; }
+</style>
 </head>
 <body>
-<div id="main">
 <a id="a_header"></a>
 <sexel-header id="header" logo="/images/sexel.png" value="Sexel"></sexel-header>
-<div id="narrative">
+
+<a id="a_grid"></a>
+<sexel-grid columns="800px 1fr 20px" rows="1fr 100px 100px" gap="40px">
+<div class=".0">
 <span class="header">What is Sexel</span>
 <p>
 <a href="http://sexel.tech">Sexel</a> is a webcomponent framework that makes building
@@ -94,25 +113,37 @@ current list available on this page are:
 </p>
 <ul>
 <li><a href="#a_address">address</a></li>  
+<li><a href="#a_audio">audio</a></li>  
+<li><a href="#a_avatar">avatar</a></li>  
 <li><a href="#a_barchart">bar chart</a></li>  
+<li><a href="#a_breadcrumb">breadcrumb</a></li>  
 <li><a href="#a_button">button</a></li>  
 <li><a href="#a_card">card</a></li>
 <li><a href="#a_carousel">carousel</a></li>
+<li><a href="#a_chat">chat</a></li>
+<li><a href="#a_clock">clock</a></li>
 <li><a href="#a_code">code</a></li>
-<li><a href="#a_data">data / table</a></li>  
+<li><a href="#a_data">data table</a></li>  
+<li><a href="#a_date">date</a></li>  
 <li><a href="#a_dialog" onclick='fsm("displayDialog")'>dialog</a></li>
 <li><a href="#a_footer">footer</a></li>  
 <li><a href="#a_form">form</a></li>
+<li><a href="#a_grid">grid</a></li>
 <li><a href="#a_header">header</a></li>  
 <li><a href="#a_linechart">line chart</a></li>  
+<li><a href="#a_list">list</a></li>  
 <li><a href="#a_login">login / signup</a></li>  
 <li><a href="#a_menu">menu</a></li>
 <li><a href="#a_notification">notification</a></li>
 <li><a href="#a_piechart">pie chart</a></li>  
 <li><a href="#a_progress">progress bar</a></li>
+<li><a href="#a_rating">rating</a></li>
+<li><a href="#a_search">search</a></li>
+<li><a href="#a_slider">slider</a></li>
 <li><a href="#a_spinner">spinner</a></li>
 <li><a href="#a_tabs">tabs</a></li>
-<li><a href="#a_upload">upload files</a></li>
+<li><a href="#a_upload">upload</a></li>
+<li><a href="#a_video">video</a></li>
 </ul>
 <span class="header">Getting Started</span>
 <p>
@@ -182,16 +213,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE. 
 </pre>
 </div>
-<div id="content">
-<!-- a button -->
-<a id="a_button"><h1>Button</h1></a>
-<div style="margin: 30px">
-<sexel-button id="testButton" label="PRESS ME" action="displayDialog"></sexel-button>
-</div>
-
-<!-- login -->
-<a id="a_login"><h1>SignUp / Login</h1></a>
-<sexel-auth id="login" type="login" authTitle="Login"></sexel-auth>
+<div class=".1"> <!-- demos -->
 
 <!-- an address box -->
 <a id="a_address"><h1>Address</h1></a>
@@ -201,19 +223,19 @@ SOFTWARE.
 	address="742 Evergreen Tr.&#10;12345 Springfield Tx&#10;USA">
 </sexel-address>
 
-<!-- table -->
-<a id="a_data"><h1>Data</h1></a>
-<sexel-data 
-    header='["Year", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]'
-    data='[
-        ["2023", 12, 14, 13, 15, 14, 13, 12],
-        ["2022", 11, 13, 12, 14, 13, 12, 11],
-        ["2021", 10, 12, 11, 13, 12, 11, 10],
-        ["2020", 9, 11, 10, 12, 11, 10, 9],
-        ["2019", 8, 10, 9, 11, 10, 9, 8]
-    ]'>
-</sexel-data>
+<!-- audio -->
+<a id="a_audio"><h1>Audio</h1></a>
+<sexel-audio src="https://www.w3schools.com/html/horse.ogg" controls="false"></sexel-audio>
 
+<!-- avatar -->
+<a id="a_avatar"><h1>Avatar</h1></a>
+<sexel-avatar 
+    img="images/avatar.png"
+    name="Dave Goehrig"
+    username="cthulhuology"
+    email="dave@dloh.org"
+    jwk="{publicKey: 'abcd1234'}">
+</sexel-avatar>
 
 <!-- bar chart -->
 <a id="a_barchart"><h1>Bar Chart</h1></a>
@@ -224,6 +246,84 @@ SOFTWARE.
     type="bar">
 </sexel-chart>
 
+<!-- breadcrumb -->
+<a id="a_breadcrumb"><h1>Breadcrumb</h1></a>
+<sexel-breadcrumb items="Home,Products,Electronics,Smartphones" separator=">"></sexel-breadcrumb>
+
+<!-- button -->
+<a id="a_button"><h1>Button</h1></a>
+<div style="margin: 30px">
+<sexel-button id="testButton" label="PRESS ME" action="displayDialog"></sexel-button>
+</div>
+
+<!-- card -->
+<a id="a_card"><h1>Card</h1></a>
+<sexel-card header="Custom Cards">
+    <p>This card can contain any HTML content.</p>
+    <sexel-button label="Click Me" action="displayDialog" id="cardButton"></sexel-button>
+</sexel-card>
+
+<!-- carousel -->
+<a id="a_carousel"><h1>Carousel</h1></a>
+<sexel-carousel delay="5000">
+    <div class="carousel-slide">
+        <img src="images/image1.png" alt="Slide 1">
+    </div>
+    <div class="carousel-slide">
+        <img src="images/image2.png" alt="Slide 2">
+    </div>
+    <div class="carousel-slide">
+        <img src="images/image3.png" alt="Slide 3">
+    </div>
+</sexel-carousel>
+
+<!-- chat -->
+<a id="a_chat"><h1>Chat</h1></a>
+<sexel-chat to="room123" from="user456"></sexel-chat>
+
+<!-- clock -->
+<a id="a_clock"><h1>Clock</h1></a>
+<sexel-clock></sexel-clock>
+<sexel-clock datestamp="2023-12-25T10:30:00"></sexel-clock>
+
+<!-- code -->
+<a id="a_code"><h1>Code</h1></a>
+<sexel-code language="javascript">
+    // This is a sample JavaScript code
+    function sayHello() {
+        console.log("Hello, world!");
+    }
+</sexel-code>
+
+<!-- data table -->
+<a id="a_data"><h1>Data</h1></a>
+<sexel-data header='["Year", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]'
+data='[
+        ["2023", 12, 14, 13, 15, 14, 13, 12],
+        ["2022", 11, 13, 12, 14, 13, 12, 11],
+        ["2021", 10, 12, 11, 13, 12, 11, 10],
+        ["2020", 9, 11, 10, 12, 11, 10, 9],
+        ["2019", 8, 10, 9, 11, 10, 9, 8]
+]'>
+</sexel-data>
+
+<!-- date picker -->
+<a id="a_date"><h1>Date</h1></a>
+<sexel-date></sexel-date>
+<sexel-date datestamp="2023-12-25"></sexel-date>
+
+<!-- form -->
+<a id="a_form"><h1>Form</h1></a>
+<sexel-form 
+	action="submitForm"
+	fields='{
+		"Name": "text",
+		"Email": "email",
+		"Password": "password",
+		"Age": "number"
+	}'>
+</sexel-form>
+
 <!-- line chart -->
 <a id="a_linechart"><h1>Line Chart</h1></a>
 <sexel-chart  id="linechart"
@@ -233,14 +333,40 @@ SOFTWARE.
     type="line">
 </sexel-chart>
 
-<!-- pie chart -->
-<a id="a_piechart"><h1>Pie Chart</h1></a>
-<sexel-chart  id="piechart"
-    data='[30, 70]' 
-    key='["Male", "Female"]' 
-    colors='["#0000FF", "#FFC0CB"]'
-    type="pie">
-</sexel-chart>
+<!-- list -->
+<a id="a_list"><h1>List</h1></a>
+<table>
+<tr style="vertical-align: top">
+<td>
+<sexel-list 
+    data='["Item 1", "Item 2", "Item 3", "Item 4"]' 
+    type="unordered">
+</sexel-list>
+</td>
+<td>
+<sexel-list 
+    data='[
+        {"Category 1": ["Item 1.1", "Item 1.2"]},
+        {"Category 2": ["Item 2.1", {"Subcategory 2.2": ["Item 2.2.1", "Item 2.2.2"]}]},
+        "Standalone Item"
+    ]' 
+    type="unordered">
+</sexel-list>
+</td><td>
+<sexel-list 
+    data='[
+        {"Fruit": ["Apple", "Banana"]},
+        {"Vegetables": ["Carrot", "Broccoli", {"Leafy": ["Lettuce", "Spinach"]}]}
+    ]' 
+    decorators='["★", "►", "✿"]' 
+    type="unordered">
+
+</sexel-list>
+</td></tr></table>
+
+<!-- login -->
+<a id="a_login"><h1>Login / Signup</h1></a>
+<sexel-auth id="login" type="login" authTitle="Login"></sexel-auth>
 
 <!-- menus -->
 <a id="a_menu"><h1>Menus</h1></a>
@@ -261,24 +387,6 @@ SOFTWARE.
 </tr>
 </table>
 
-<!-- progress -->
-<a id="a_progress"><h1>Progress Bar</h1></a>
-<sexel-progress 
-	id="progress" 
-	value="30" 
-	max="100" 
-	label="30% Complete">
-</sexel-progress>
-
-<!-- upload -->
-<a id="a_upload"><h1>File Upload</h1></a>
-<sexel-upload 
-	id="fileUploader" 
-	label="Select Files" 
-	multiple="true" 
-	accept=".png,.jpg,.jpeg,.pdf">
-</sexel-upload>
-
 <!-- notification -->
 <a id="a_notification"><h1>Notification</h1></a>
 <sexel-notification id="notification"
@@ -288,6 +396,42 @@ SOFTWARE.
     dismissable="true">
 </sexel-notification>
 <sexel-menu items="error, warning, info, success"></sexel-menu>
+
+<!-- pie chart -->
+<a id="a_piechart"><h1>Pie Chart</h1></a>
+<sexel-chart  id="piechart"
+    data='[30, 70]' 
+    key='["Male", "Female"]' 
+    colors='["#0000FF", "#FFC0CB"]'
+    type="pie">
+</sexel-chart>
+
+<!-- progress -->
+<a id="a_progress"><h1>Progress Bar</h1></a>
+<sexel-progress 
+	id="progress" 
+	value="30" 
+	max="100" 
+	label="30% Complete">
+</sexel-progress>
+
+<!-- rating -->
+<a id="a_rating"><h1>Rating</h1></a>
+<sexel-rating max="5" value="3"></sexel-rating>
+<sexel-rating max="7" value="4" char="♥"></sexel-rating>
+
+<!-- search -->
+<a id="a_search"><h1>Search</h1></a>
+<sexel-search placeholder="Enter your query" action="performSearch"></sexel-search>
+
+<!-- slider -->
+<a id="a_slider"><h1>Slider</h1></a>
+<sexel-slider min="0" max="100" value="75" label="Volume"></sexel-slider>
+<sexel-slider min="0" max="10" value="5" label="Brightness"></sexel-slider>
+
+<!-- spinner  -->
+<a id="a_spinner"><h1>Spinner</h1></a>
+<sexel-spinner shown="true"></sexel-spinner>
 
 <!-- tabs -->
 <a id="a_tabs"><h1>Tabs</h1></a>
@@ -300,51 +444,23 @@ SOFTWARE.
     ]'>
 </sexel-tabs>
 
-<!-- form -->
-<a id="a_form"><h1>Form</h1></a>
-<sexel-form 
-	action="submitForm"
-	fields='{
-		"Name": "text",
-		"Email": "email",
-		"Password": "password",
-		"Age": "number"
-	}'>
-</sexel-form>
+<!-- upload -->
+<a id="a_upload"><h1>Upload</h1></a>
+<sexel-upload 
+	id="fileUploader" 
+	label="Select Files" 
+	multiple="true" 
+	accept=".png,.jpg,.jpeg,.pdf">
+</sexel-upload>
 
-<!-- spinner  -->
-<a id="a_spinner"><h1>Spinner</h1></a>
-<sexel-spinner shown="true"></sexel-spinner>
+<!-- video -->
+<a id="a_video"><h1>Video</h1></a>
+<sexel-video src="https://www.w3schools.com/html/mov_bbb.mp4" controls="true"></sexel-video>
 
-<!-- card -->
-<a id="a_card"><h1>Card</h1></a>
-<sexel-card header="Custom Cards">
-    <p>This card can contain any HTML content.</p>
-    <sexel-button label="Click Me" action="displayDialog" id="cardButton"></sexel-button>
-</sexel-card>
-
-<!-- carousel -->
-<a id="a_carousel"><h1>Carousel</h1></a>
-<sexel-carousel delay="5000">
-    <div class="carousel-slide">
-        <img src="images/image1.png" alt="Slide 1" style="width:100%">
-    </div>
-    <div class="carousel-slide">
-        <img src="images/image2.png" alt="Slide 2" style="width:100%">
-    </div>
-    <div class="carousel-slide">
-        <img src="images/image3.png" alt="Slide 3" style="width:100%">
-    </div>
-</sexel-carousel>
-
-<!-- code -->
-<a id="a_code"><h1>Code</h1></a>
-<sexel-code language="javascript">
-    // This is a sample JavaScript code
-    function sayHello() {
-        console.log("Hello, world!");
-    }
-</sexel-code>
+<!-- padding so the footer doesn't cover up the video controls -->
+<div id="padding" style="height: 100px"></div> 
+</div>
+</sexel-grid>
 
 <!-- popup dialog -->
 <sexel-dialog  id="dialog"
@@ -361,7 +477,6 @@ SOFTWARE.
 	label="About Sexel"
 	message='Sexel: the sexy webcomponent framework, under MIT License'>
 </sexel-dialog>	
-</div>
 
 <!-- footer -->
 <a id="a_footer"></a>
