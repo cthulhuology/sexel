@@ -1,13 +1,4 @@
 <!-- Usage example: You can embed a <sexel-canvas> in your HTML and provide a script via the "script" attribute -->
-<sexel-canvas id="myCanvas" width="500" height="400" 
-  script='
-    50 50 150 100 fillRect 
-    "blue" setFillStyle 
-    beginPath 
-    100 100 moveTo 200 100 lineTo 200 200 lineTo 100 200 closePath stroke
-  '>
-</sexel-canvas>
-
 <script>
   // Define the custom Sexel Canvas component
   class SexelCanvas extends HTMLElement {
@@ -209,3 +200,13 @@
   // Register the custom element with the browser
   customElements.define('sexel-canvas', SexelCanvas);
 </script>
+
+<style>
+.sexel-canvas {
+	max-width: 100%;
+	padding: 0px;
+}
+</style>
+<template id="sexel-canvas">
+<canvas class="sexel-canvas" id="canvas"></canvas>
+</template>

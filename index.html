@@ -90,6 +90,7 @@ current list available on this page are:
 <li><a href="#a_barchart">bar chart</a></li>  
 <li><a href="#a_breadcrumb">breadcrumb</a></li>  
 <li><a href="#a_button">button</a></li>  
+<li><a href="#a_canvas">canvas</a></li>
 <li><a href="#a_card">card</a></li>
 <li><a href="#a_carousel">carousel</a></li>
 <li><a href="#a_chat">chat</a></li>
@@ -236,6 +237,19 @@ SOFTWARE.
 <div style="margin: 30px">
 <sexel-button id="testButton" label="PRESS ME" action="displayDialog"></sexel-button>
 </div>
+<!-- canvas -->
+<a id="a_canvas"><h1>Canvas<h1></a>
+<sexel-canvas id="myCanvas" width="500" height="400" 
+  script='
+    50 50 150 100 fillRect 
+    "blue" setFillStyle 
+    beginPath 
+    300 300 moveTo 
+    200 300 lineTo 
+    300 200 lineTo 
+    300 300 closePath stroke
+  '>
+</sexel-canvas>
 
 <!-- card -->
 <a id="a_card"><h1>Card</h1></a>
