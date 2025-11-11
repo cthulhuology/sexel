@@ -308,9 +308,12 @@ data='[
 <!-- line chart -->
 <a id="a_linechart"><h1>Line Chart</h1></a>
 <sexel-chart  id="linechart"
-    data='[15, 25, 35, 45, 55, 65,84]' 
-    key='["Mon", "Tue", "Wed", "Thu", "Fri", "Sat","Sun"]' 
-    colors='["red","orange","yellow","green","blue","indigo","violet"]'
+    key='Somethings Per Day'
+    labels='["Mon", "Tue", "Wed", "Thu", "Fri", "Sat","Sun"]' 
+    data='[{
+	"data" : [15, 25, 35, 45, 55, 65,84],
+    	"backgroundColor": ["red","orange","yellow","green","blue","indigo","violet"]
+	}]'
     type="line">
 </sexel-chart>
 
@@ -381,9 +384,15 @@ data='[
 <!-- pie chart -->
 <a id="a_piechart"><h1>Pie Chart</h1></a>
 <sexel-chart  id="piechart"
-    data='[30, 70]' 
-    key='["Male", "Female"]' 
-    colors='["#0000FF", "#FFC0CB"]'
+    key='by gender' 
+    labels='[ "male", "female" ]'
+    data='[{
+		"data": [ 30, 70 ],
+		"backgroundColor": [ 
+			"rgb(100,142,174)",	
+			"rgb(255,212,244)" 
+		]
+	}]'
     type="pie">
 </sexel-chart>
 
