@@ -132,12 +132,17 @@ const t = Sexel.tag('sexel-address',['email','name','address'],{
 </template>
 
 <script>
-    Sexel.tag('sexel-auth', ['type', 'email', 'password','message'], {
-        onsubmit: (self, e) => {
+    Sexel.tag('sexel-auth', ['action','user', 'password','label'], {
+	ondraw: (self) => {
+		const button = self.querySelector('#login')
+		console.log(button)
+		button.textContent = self.label()
+	},
+        onsubmit: (self,e) => {
             e.preventDefault()
-            const email = self.querySelector('#email').value
-            const password = self.querySelector('#password').value
-	    fsm("auth",email,password)
+	    const user = self.querySelector("#user").value
+	    const password = self.querySelector("#password").value
+	    fsm(self.action() || "auth",self, { user,password })
         }
     });
 </script>
@@ -174,10 +179,9 @@ const t = Sexel.tag('sexel-address',['email','name','address'],{
 
 <template id="sexel-auth">
     <form class="sexel-auth">
-        <input type="email" id="email" placeholder="Email" required />
+        <input type="email" id="user" placeholder="Email" required />
         <input type="password" id="password" placeholder="Password" required />
-        <span id="message"></span>
-        <button type="submit">Submit</button>
+        <button class="sexel-button" id="login" type="submit"></button>
     </form>
 </template>
 

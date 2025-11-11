@@ -23,6 +23,7 @@ handler({
 	Contact: (self,e) => { console.log("Contacting us...") },
 	Services: (self,e) => { console.log("Selecting Services") },
 	About: (self,e) => { $('about').open() },
+        auth: (self,e) => { console.log("User", e.user); console.log("Password", e.password) },
 	error: (self,e) => { 
 		$('notification').open()
 		$('notification').type('error')
@@ -194,7 +195,7 @@ at: <a href="https://github.com/cthulhuology/sexel">https://github.com/cthulhuol
 </sexel-code>
 <p>The avatar component shows the user image, but contains user meta-data.</p>
 
-<a href="#a_barchart"><h2>barchart</h2></a>
+<a href="#a_barchart"><h2>bar chart</h2></a>
 <sexel-code language="html">
 &lt;sexel-chart  id="barchart"
 	type="bar"
@@ -330,6 +331,89 @@ data='[
 &lt;/sexel-data&gt;
 </sexel-code>
 <p>The data component displays tabular data as a table.</p>
+
+<a href="#a_date"><h2>date</h2></a>
+<sexel-code language="html">
+&lt;sexel-date&lt;&gt;/sexel-date&gt;
+&lt;sexel-date datestamp="2023-12-25"&lt;&gt;/sexel-date&gt;
+</sexel-code>
+<p>The date component displays a date picker and the picked date.  It has an optional datestamp attribute to set the date to other than today's.</p>
+
+<a href="#a_form"><h2>form</h2></a>
+<sexel-code language="html">
+&lt;sexel-form 
+	action="submitForm"
+	fields='{
+		"Name": "text",
+		"Email": "email",
+		"Password": "password",
+		"Age": "number"
+	}'&gt;
+&lt;/sexel-form&gt;
+</sexel-code>
+<p>The form component generates a form element from a fields object.  It supports different input types such as:
+<ul>
+<li>text</li>
+<li>email</li>
+<li>password</li>
+<li>number</li>
+</ul>
+The form also takes an action to invoke in the FSM with the submitted values.
+</p>
+
+<a href="#a_linechart"><h2>line chart</h2></a>
+<sexel-code language="html">
+&lt;sexel-chart  id="linechart"
+    labels='["Mon", "Tue", "Wed", "Thu", "Fri", "Sat","Sun"]' 
+    data='[{
+	"data" : [15, 25, 35, 45, 55, 65,84],
+    	"backgroundColor": ["red","orange","yellow","green","blue","indigo","violet"]
+	}]'
+    type="line"&gt;
+&lt;/sexel-chart&gt;
+</sexel-code>
+<p>The chart component can also be used to create line charts.  Like with bar charts, the blurb (title), labels, data, and legend 
+take objects followint the <a href="https://chartjs.org">Chart.js</a> documentation.
+</p>
+
+
+
+<a href="#a_list"><h2>list</h2></a>
+<sexel-code language="html">
+&lt;sexel-list 
+    data='["Item 1", "Item 2", "Item 3", "Item 4"]' 
+    type="unordered"&gt;
+&lt;/sexel-list&gt;
+
+&lt;sexel-list 
+    data='[
+        {"Category 1": ["Item 1.1", "Item 1.2"]},
+        {"Category 2": ["Item 2.1", {"Subcategory 2.2": ["Item 2.2.1", "Item 2.2.2"]}]},
+        "Standalone Item"
+    ]' 
+    type="unordered"&gt;
+&lt;/sexel-list&gt;
+
+&lt;sexel-list 
+    data='[
+        {"Fruit": ["Apple", "Banana"]},
+        {"Vegetables": ["Carrot", "Broccoli", {"Leafy": ["Lettuce", "Spinach"]}]}
+    ]' 
+    decorators='["★", "►", "✿"]' 
+    type="unordered"&gt;
+
+&lt;/sexel-list&gt;
+</sexel-code>
+<p>The list component supports multi-dimensional data driven lists from JSON objects. It aslo supports
+both ordered and unordered lists along with custom decorators for each list level.
+</p>
+
+
+<a href="#a_login"><h2>login / signup</h2></a>
+<sexel-code language="html">
+&lt;sexel-auth id="login" label="Sign Up"&gt;&lt;/sexel-auth&gt;
+</sexel-code>
+<p>The auth component is a form for handling user logins, it invokes the "auth" action of the FSM by default.</p>
 
 <!-- END OF COMPONENT DOCS -->
 
@@ -538,7 +622,7 @@ data='[
 
 <!-- login -->
 <a id="a_login"><h1>Login / Signup</h1></a>
-<sexel-auth id="login" type="login" authTitle="Login"></sexel-auth>
+<sexel-auth id="login" label="Sign Up"></sexel-auth>
 
 <!-- menus -->
 <a id="a_menu"><h1>Menus</h1></a>
