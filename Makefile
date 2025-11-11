@@ -8,5 +8,3 @@ start: components.html
 components.html: components/*
 	cat components/* > components.html
 
-website:
-	cd ../sexel.tech && $(MAKE)
