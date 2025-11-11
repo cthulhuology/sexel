@@ -1,0 +1,196 @@
+<script>
+  // Define the canvas-based menu component.
+  class SexelCanvasMenu extends HTMLElement {
+    constructor() {
+      super();
+      this.attachShadow({ mode: 'open' });
+
+      // Create an instance of the underlying canvas component.
+      // (This assumes that <sexel-canvas> is already defined and exposes its canvas element and context.)
+      this.canvasComp = document.createElement('sexel-canvas');
+
+      // Set initial dimensions from attributes (or fall back to defaults).
+      const menuW = parseInt(this.getAttribute('w')) || 200;
+      const menuH = parseInt(this.getAttribute('h')) || 300;
+      this.canvasComp.setAttribute('width', menuW);
+      this.canvasComp.setAttribute('height', menuH);
+
+      // Append the canvas component to this component's shadow DOM.
+      this.shadowRoot.appendChild(this.canvasComp);
+
+      // Keep track of the currently selected menu item.
+      this.selectedIndex = -1;
+
+      // Bind our click handler.
+      this.handleClick = this.handleClick.bind(this);
+    }
+
+    // Observe these attributes for changes.
+    static get observedAttributes() {
+      return ['x', 'y', 'w', 'h', 'items', 'font-size'];
+    }
+
+    connectedCallback() {
+      // Add a click event listener to the underlying canvas.
+      if (this.canvasComp.canvas) {
+        this.canvasComp.canvas.addEventListener('click', this.handleClick);
+      }
+      this.renderMenu();
+    }
+
+    disconnectedCallback() {
+      if (this.canvasComp.canvas) {
+        this.canvasComp.canvas.removeEventListener('click', this.handleClick);
+      }
+    }
+
+    attributeChangedCallback(name, oldValue, newValue) {
+      // Update canvas dimensions when w/h change.
+      if (name === 'w') {
+        this.canvasComp.setAttribute('width', newValue);
+      }
+      if (name === 'h') {
+        this.canvasComp.setAttribute('height', newValue);
+      }
+      // Re-render the menu if any relevant attribute changes.
+      this.renderMenu();
+    }
+
+    // Utility getter for menu items.
+    get menuItems() {
+      const itemsAttr = this.getAttribute('items');
+      if (!itemsAttr) return [];
+      try {
+        const parsed = JSON.parse(itemsAttr);
+        if (Array.isArray(parsed)) return parsed;
+      } catch (e) {
+        // Fallback to a comma-separated list.
+      }
+      return itemsAttr.split(',').map(s => s.trim());
+    }
+
+    renderMenu() {
+      // Get the menu's bounding rectangle.
+      const menuX = parseInt(this.getAttribute('x')) || 0;
+      const menuY = parseInt(this.getAttribute('y')) || 0;
+      const menuW = parseInt(this.getAttribute('w')) || 200;
+      const menuH = parseInt(this.getAttribute('h')) || 300;
+      const items = this.menuItems;
+      const ctx = this.canvasComp.ctx;
+      if (!ctx) return;
+
+      // Clear the entire canvas.
+      ctx.clearRect(0, 0, menuW, menuH);
+
+      // Draw the menu background.
+      ctx.fillStyle = "#eee";
+      ctx.fillRect(menuX, menuY, menuW, menuH);
+
+      // Draw the menu border.
+      ctx.strokeStyle = "black";
+      ctx.lineWidth = 2;
+      ctx.strokeRect(menuX, menuY, menuW, menuH);
+
+      // Get the font size from the attribute (defaulting to "16px") and set the font.
+      const fontSize = this.getAttribute('font-size') || "16px";
+      ctx.font = `${fontSize} sans-serif`;
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+
+      // Determine layout: horizontal if width > height, vertical otherwise.
+      if (menuW > menuH) {
+        // Horizontal layout.
+        const itemWidth = menuW / (items.length || 1);
+        items.forEach((item, index) => {
+          const itemLeft = menuX + index * itemWidth;
+
+          // Highlight the item if it is selected.
+          if (index === this.selectedIndex) {
+            ctx.fillStyle = "lightblue";
+            ctx.fillRect(itemLeft, menuY, itemWidth, menuH);
+          }
+
+          // Draw the text for the menu item.
+          ctx.fillStyle = "black";
+          ctx.fillText(item, itemLeft + itemWidth / 2, menuY + menuH / 2);
+
+          // Draw a vertical separator (except after the last item).
+          if (index < items.length - 1) {
+            ctx.strokeStyle = "gray";
+            ctx.beginPath();
+            ctx.moveTo(itemLeft + itemWidth, menuY);
+            ctx.lineTo(itemLeft + itemWidth, menuY + menuH);
+            ctx.stroke();
+          }
+        });
+      } else {
+        // Vertical layout.
+        const itemHeight = menuH / (items.length || 1);
+        items.forEach((item, index) => {
+          const itemTop = menuY + index * itemHeight;
+
+          // Highlight the item if selected.
+          if (index === this.selectedIndex) {
+            ctx.fillStyle = "lightblue";
+            ctx.fillRect(menuX, itemTop, menuW, itemHeight);
+          }
+
+          // Draw the menu item text.
+          ctx.fillStyle = "black";
+          ctx.fillText(item, menuX + menuW / 2, itemTop + itemHeight / 2);
+
+          // Draw a horizontal separator between items.
+          if (index < items.length - 1) {
+            ctx.strokeStyle = "gray";
+            ctx.beginPath();
+            ctx.moveTo(menuX, itemTop + itemHeight);
+            ctx.lineTo(menuX + menuW, itemTop + itemHeight);
+            ctx.stroke();
+          }
+        });
+      }
+    }
+
+    handleClick(event) {
+      // Determine the menu's bounding rectangle.
+      const menuX = parseInt(this.getAttribute('x')) || 0;
+      const menuY = parseInt(this.getAttribute('y')) || 0;
+      const menuW = parseInt(this.getAttribute('w')) || 200;
+      const menuH = parseInt(this.getAttribute('h')) || 300;
+      const items = this.menuItems;
+      const clickX = event.offsetX;
+      const clickY = event.offsetY;
+
+      // Check if the click falls within the menu bounds.
+      if (
+        clickX >= menuX &&
+        clickX <= menuX + menuW &&
+        clickY >= menuY &&
+        clickY <= menuY + menuH
+      ) {
+        let clickedIndex;
+        if (menuW > menuH) {
+          // Horizontal layout: determine index based on X coordinate.
+          const itemWidth = menuW / (items.length || 1);
+          clickedIndex = Math.floor((clickX - menuX) / itemWidth);
+        } else {
+          // Vertical layout: determine index based on Y coordinate.
+          const itemHeight = menuH / (items.length || 1);
+          clickedIndex = Math.floor((clickY - menuY) / itemHeight);
+        }
+        this.selectedIndex = clickedIndex;
+        this.renderMenu();
+
+        // Dispatch a custom event with details of the selected menu item.
+        this.dispatchEvent(new CustomEvent('menuSelect', {
+          detail: { index: clickedIndex, item: items[clickedIndex] },
+          bubbles: true,
+          composed: true
+        }));
+      }
+    }
+  }
+
+  // Register the custom element.
+  customElements.define('sexel-canvas-menu', SexelCanvasMenu);
+</script>
