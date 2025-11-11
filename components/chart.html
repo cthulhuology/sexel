@@ -1,6 +1,6 @@
 <script>
     // Define the 'sexel-chart' component using the Sexel framework
-    Sexel.tag('sexel-chart', ['type','labels','data','key'], {
+    Sexel.tag('sexel-chart', ['type','labels','data','blurb','legend'], {
         ondraw: (self) => {
             const chartContainer = self.querySelector('#chart-container');
             chartContainer.innerHTML = '';  // Clear any previous chart
@@ -10,14 +10,11 @@
             chartContainer.appendChild(canvas);
 
             // Get data, labels, and colors
-	    console.log( "key", self.key())
-	    console.log( "data", self.data())
-	    console.log( "labels", self.labels())
-	    console.log( "type", self.type())
-	    const chartTitle = self.key() ? self.key() : false
+	    const chartTitle = self.blurb() ? JSON.parse(self.blurb()) : { display: false }
             const chartData = JSON.parse(self.data());  	// Parse the data string into an array of objects
             const chartType = self.type() || 'bar';  // Default chart type is 'bar'
 	    const chartLabels = self.labels() ? JSON.parse(self.labels()) : []
+	    const chartLegend = self.legend() ? JSON.parse(self.legend()) : { display: false  }
 
             // Prepare the chart configuration
             const config = {
@@ -34,13 +31,8 @@
                         }
                     },
 		    plugins: {
-			    legend: {
-				position: 'bottom'
-			    },	
-			    title: {
-				display : true, // chartTitle ? true : false,
-				text: chartTitle
-			    }
+			    legend: chartLegend,
+			    title: chartTitle,
 		   }
   		
 		}

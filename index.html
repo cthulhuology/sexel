@@ -61,17 +61,17 @@ handler({
 <div class=".0">
 <span class="header">What is Sexel</span>
 <p>
-<a href="http://sexel.tech">Sexel</a> is a webcomponent framework that makes building
+<a href="http://github.com/cthulhuology/sexel">Sexel</a> is a webcomponent framework that makes building
 dynamic distributed web applications easy. Using <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_components">Web Components</a> to build
 interfaces, Sexel combines block like construction with a 
 distributed <a href="">Finite State Machine</a> to model all
 application state transitions as messages.
 </p>
 <p>
-By building pages out of <a href="http://sexel.tech">Sexel</a> components 
+By building pages out of <a href="http://github.com/cthulhuology/sexel">Sexel</a> components 
 (as seen on the left) it is easy to put together polished user interfaces without
 having to code html, css, and javascript.  Using 
-<a href="http://sexel.tech">Sexel</a>'s finite state machine to model
+<a href="http://github.com/cthulhuology/sexel">Sexel</a>'s finite state machine to model
 the interactions between the components, provides an easy to reason about
 approach to managing application state.  And using <a href="https://mesgd.org">mesgd</a>
 messaging, encryption, and authentication natively, you can produce secure
@@ -120,7 +120,7 @@ current list available on this page are:
 </ul>
 <span class="header">Getting Started</span>
 <p>
-<a href="http://sexel.tech">Sexel</a> uses HTML5 import links to include components
+<a href="http://github.com/cthulhuology/sexel">Sexel</a> uses HTML5 import links to include components
 on a page.  As long as you include 
 </p>
 <sexel-code language="html">
@@ -160,12 +160,185 @@ If you would like to get the latest source code of the framework it can be found
 at: <a href="https://github.com/cthulhuology/sexel">https://github.com/cthulhuology/sexel</a>
 </p>
 <span class="header">Component Documentation</span>
-<p><b>Coming Soon to a web page near you...</b></p>
+<p>The following entires show the code of the components to the right</p>
+<a href="#a_address"><h2>address</h2></a>
+<sexel-code langauge="html">
+&lt;sexel-address id="foo" 
+	name="bob" 
+	email="bob@example.com" 
+	address="742 Evergreen Tr.
+                 12345 Springfield Tx
+                 USA" &gt;
+&lt;/sexel-address&gt;
+</sexel-code>
+<p>The address component currently takes name, email, and address.</p>
+
+<a href="#a_audio"><h2>audio</h2></a>
+<sexel-code language="html">
+&lt;sexel-audio 
+	src="https://www.w3schools.com/html/horse.ogg" 
+	controls="false"&gt;
+&lt;/sexel-audio&gt;
+</sexel-code>
+<p>The audio component has a src url and a controls flag. The component comes with a Play and Stop button.</p>
+
+<a href="#a_avatar"><h2>avatar</h2></a>
+<sexel-code language="html">
+&lt;sexel-avatar 
+    img="images/avatar.png"
+    name="Dave Goehrig"
+    username="cthulhuology"
+    email="dave@dloh.org"
+    jwk="{publicKey: 'abcd1234'}"&gt;
+&lt;/sexel-avatar&gt;
+</sexel-code>
+<p>The avatar component shows the user image, but contains user meta-data.</p>
+
+<a href="#a_barchart"><h2>barchart</h2></a>
+<sexel-code language="html">
+&lt;sexel-chart  id="barchart"
+	type="bar"
+	blurb='{ "text": "Tokens Per Second", "display": true, "position": "top" }'
+	labels='["12:00","12:10","12:20","12:30","12:40","12:50"]'
+        legend='{ display: true, position: "bottom" }'
+	data='[{
+		"label": "input",
+		"data": [ 100, 80, 34, 22, 200, 121 ],
+		"backgroundColor": "rgb(100,142,174)"	
+	},{
+		"label": "output",
+		"data": [ 200, 73, 53, 35, 100, 38 ],
+		"backgroundColor": "rgb(180,1c2,1f4)"	
+	}]'
+&gt;
+&lt;/sexel-chart&gt;
+</sexel-code>
+<p>The chart widget can be used to generate bar charts.  See <a href="https://www.chartjs.org">Chart.js</a> for data docs.</p>
+
+
+<a href="#a_breadcrumb"><h2>breadcrumb</h2></a>
+<sexel-code language="html">
+&lt;sexel-breadcrumb items="Home,Products,Electronics,Smartphones" separator="&gt;"&gt;
+&lt;/sexel-breadcrumb&gt;
+</sexel-code>
+<p>The breadcrumb component tracks a path heirarchy it takes an items list and a separator character.</p>
+
+<a href="#a_button"><h2>button</h2></a>
+<sexel-code language="html">
+&lt;sexel-button id="testButton" label="PRESS ME" action="displayDialog"&gt;&lt;/sexel-button&gt;
+</sexel-code>
+<p>The button component has a label and an action.  The action invokes the named fsm action when clicked. Image buttons coming soon.</p>
+
+<a href="#a_canvas"><h2>canvas</h2></a>
+<sexel-code language="html">
+&lt;sexel-canvas id="myCanvas" width="500" height="400" 
+  script='
+    blue setFillStyle 
+    50 50 150 100 fillRect 
+    beginPath 
+    300 300 moveTo 
+    200 300 lineTo 
+    300 200 lineTo 
+    300 300 closePath stroke
+  '&gt;
+&lt;/sexel-canvas&gt;
+</sexel-code>
+<p>The canvas component wraps the HTML5 canvas API with a Postscript / Turtle style drawing API.  Currently it supports:
+<ul>
+<li>beginPath</li>
+<li>closePath</li>
+<li>moveTo</li>
+<li>lineTo</li>
+<li>arc</li>
+<li>stroke</li>
+<li>fill</li>
+<li>fillRect</li>
+<li>strokeRect</li>
+<li>clearRect</li>
+<li>rect</li>
+<li>fillText</li>
+<li>strokeText</li>
+<li>setFillStyle</li>
+<li>setStrokeStyle</li>
+<li>setLineWidth</li>
+</ul>
+</p>
+
+<a href="#a_card"><h2>card</h2></a>
+<sexel-code language="html">
+&lt;sexel-card header="Custom Cards"&gt;
+    &lt;p&gt;This card can contain any HTML content.&lt;/p&gt;
+    &lt;sexel-button label="Click Me" action="displayDialog" id="cardButton"&gt;&lt;/sexel-button&gt;
+&lt;/sexel-card&gt;
+</sexel-code>
+<p>The card component is used to contain other components with a bounding box and a header.</p>
+
+<a href="#a_carousel"><h2>carousel</h2></a>
+<sexel-code language="html">
+&lt;sexel-carousel delay="5000"&gt;
+    &lt;div class="carousel-slide"&gt;
+        &lt;img src="images/image1.png" alt="Slide 1"&gt;
+    &lt;div&gt;
+    &lt;div class="carousel-slide"&gt;
+        &lt;img src="images/image2.png" alt="Slide 2"&gt;
+    &lt;div&gt;
+    &lt;div class="carousel-slide"&gt;
+        &lt;img src="images/image3.png" alt="Slide 3"&gt;
+    &lt;div&gt;
+&lt;sexel-carousel&gt;
+</sexel-code>
+<p>The carousel component takes a set of child elements and will cycle through them based on the specified delay.</p>
+
+<a href="#a_chat"><h2>chat</h2></a>
+<sexel-code language="html">
+&lt;sexel-chat to="room123" from="user456"&gt;&lt;/sexel-chat&gt;
+</sexel-code>
+<p>The chat component is an experimental websocket based chat window, with file upload, unicode selector, and download link.
+This widget is a work in progress and likely to change.  Currently the template is not configurable enough.</p>
+
+<a href="#a_clock"><h2>clock</h2></a>
+<sexel-code language="html">
+&lt;sexel-clock&gt;&lt;sexel-clock&gt;
+&lt;sexel-clock datestamp="2023-12-25T10:30:00"&gt;&lt;sexel-clock&gt;
+</sexel-code>
+<p>The clock component displays the current date and time and updates as time progresses.  The component also has
+an optional dateStamp attribute which will display a fixed date and time.  Both use toLocaleString under the hood
+to use the user's locale specific format, defaulting to en-US.</p>
+
+<a href="#a_code"><h2>code</h2></a>
+<sexel-code language="html">
+&lt;sexel-code language="javascript"&gt;
+    // This is a sample JavaScript code
+    function sayHello() {
+        console.log("Hello, world!");
+    }
+&lt;/sexel-code&gt;
+</sexel-code>
+<p>The code component displays source code using <a href="https://highlightjs.org">Highlight.js</a> for syntax highlighting.</p>
+
+<a href="#a_data"><h2>data</h2></a>
+<sexel-code language="html">
+&lt;sexel-data
+header='["Year", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]'
+data='[
+        ["2023", 12, 14, 13, 15, 14, 13, 12],
+        ["2022", 11, 13, 12, 14, 13, 12, 11],
+        ["2021", 10, 12, 11, 13, 12, 11, 10],
+        ["2020", 9, 11, 10, 12, 11, 10, 9],
+        ["2019", 8, 10, 9, 11, 10, 9, 8]
+]'&gt;
+&lt;/sexel-data&gt;
+</sexel-code>
+<p>The data component displays tabular data as a table.</p>
+
+<!-- END OF COMPONENT DOCS -->
+
+<hr>
 <span class="header">License</span>
 <pre>
 MIT License 
 
-Copyright (c) 2024 David J. Goehrig &lt;dave@dloh.org&gt;
+Copyright (c) 2025 David J. Goehrig &lt;dave@dloh.org&gt;
 
 Permission is hereby granted, free of charge, to any person obtaining a copy 
 of this software and associated documentation files (the "Software"), to deal 
@@ -213,9 +386,10 @@ SOFTWARE.
 <!-- bar chart -->
 <a id="a_barchart"><h1>Bar Chart</h1></a>
 <sexel-chart  id="barchart"
-	key="Tokens Per Second"
 	type="bar"
+	blurb='{ "text": "Tokens Per Second", "display": true, "position": "top" }'
 	labels='["12:00","12:10","12:20","12:30","12:40","12:50"]'
+        legend='{ "display": true, "position": "bottom" }'
 	data='[{
 		"label": "input",
 		"data": [ 100, 80, 34, 22, 200, 121 ],
@@ -237,12 +411,13 @@ SOFTWARE.
 <div style="margin: 30px">
 <sexel-button id="testButton" label="PRESS ME" action="displayDialog"></sexel-button>
 </div>
+
 <!-- canvas -->
 <a id="a_canvas"><h1>Canvas<h1></a>
 <sexel-canvas id="myCanvas" width="500" height="400" 
   script='
+    blue setFillStyle 
     50 50 150 100 fillRect 
-    "blue" setFillStyle 
     beginPath 
     300 300 moveTo 
     200 300 lineTo 
@@ -322,7 +497,6 @@ data='[
 <!-- line chart -->
 <a id="a_linechart"><h1>Line Chart</h1></a>
 <sexel-chart  id="linechart"
-    key='Somethings Per Day'
     labels='["Mon", "Tue", "Wed", "Thu", "Fri", "Sat","Sun"]' 
     data='[{
 	"data" : [15, 25, 35, 45, 55, 65,84],
@@ -398,7 +572,6 @@ data='[
 <!-- pie chart -->
 <a id="a_piechart"><h1>Pie Chart</h1></a>
 <sexel-chart  id="piechart"
-    key='by gender' 
     labels='[ "male", "female" ]'
     data='[{
 		"data": [ 30, 70 ],

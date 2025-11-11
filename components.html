@@ -339,98 +339,22 @@ Sexel.tag('sexel-button',['label','action','image'],{
 <template id="sexel-button">
 <button class="sexel-button"><span id="label"></span></button>
 </template>
-<!-- Usage example: You can embed a <sexel-canvas> in your HTML and provide a script via the "script" attribute -->
-<sexel-canvas id="myCanvas" width="500" height="400" 
-  script='
-    50 50 150 100 fillRect 
-    "blue" setFillStyle 
-    beginPath 
-    100 100 moveTo 200 100 lineTo 200 200 lineTo 100 200 closePath stroke
-  '>
-</sexel-canvas>
-
 <script>
   // Define the custom Sexel Canvas component
-  class SexelCanvas extends HTMLElement {
-    constructor() {
-      super();
-      // Attach an open shadow DOM for encapsulation
-      this.attachShadow({ mode: 'open' });
-
-      // Add component-scoped styles
-      const style = document.createElement('style');
-      style.textContent = `
-        :host {
-          display: inline-block;
-          border: 1px solid #ccc;
-        }
-        canvas {
-          display: block;
-        }
-      `;
-      this.shadowRoot.appendChild(style);
-
-      // Create the canvas element; set its dimensions from attributes or default values
-      this.canvas = document.createElement('canvas');
-      this.canvas.width = parseInt(this.getAttribute('width')) || 300;
-      this.canvas.height = parseInt(this.getAttribute('height')) || 150;
-      this.shadowRoot.appendChild(this.canvas);
+  Sexel.tag('sexel-canvas', ['width','height','script'], {
+    ondraw: (self) => {
+      const canvas = self.querySelector('#canvas')
+      canvas.innerHTML = ''
+      canvas.width = self.width() || 300;
+      canvas.height = self.height() || 300;
 
       // Get the 2D drawing context from the canvas
-      this.ctx = this.canvas.getContext('2d');
-    }
-
-    // Watch for changes to width, height, and our custom "script" attribute
-    static get observedAttributes() {
-      return ['width', 'height', 'script'];
-    }
-
-    connectedCallback() {
-      // Render initial state
-      this.render();
-      // If a script attribute is present, execute it
-      const scriptAttr = this.getAttribute('script');
-      if (scriptAttr) {
-        this.executePostfix(scriptAttr);
-      }
-    }
-
-    attributeChangedCallback(name, oldValue, newValue) {
-      if (name === 'width' || name === 'height') {
-        // Update the canvas dimensions when width or height change
-        this.canvas[name] = parseInt(newValue);
-        this.render();
-      } else if (name === 'script') {
-        // When the script attribute is updated, re-render and execute the new script
-        this.render();
-        this.executePostfix(newValue);
-      }
-    }
-
-    render() {
-      // Clear the canvas (you might modify this if you want persistent drawing)
-      this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    }
-
-    /**
-     * executePostfix(script)
-     * 
-     * Parses a string containing drawing commands in postfix (reverse‑polish)
-     * notation and executes them against the canvas context.
-     *
-     * Example script:
-     *   50 50 150 100 fillRect "blue" setFillStyle beginPath 100 100 moveTo 200 100 lineTo 200 200 lineTo 100 200 closePath stroke
-     *
-     * In the above:
-     *   - "50 50 150 100 fillRect" draws a filled rectangle.
-     *   - Then it sets the fill style to blue.
-     *   - Next, a new path is started and lines are drawn.
-     */
-    executePostfix(script) {
+      const ctx = canvas.getContext('2d');
+      const script = self.script()
+      
       // Split the script into tokens by whitespace.
       const tokens = script.trim().split(/\s+/);
       const stack = [];
-      const ctx = this.ctx;
 
       // Dictionary of commands mapping token names to functions that implement them.
       // Each function pops its required parameters from the stack.
@@ -526,17 +450,12 @@ Sexel.tag('sexel-button',['label','action','image'],{
         if (/^-?\d+(\.\d+)?$/.test(token)) {
           stack.push(parseFloat(token));
         }
-        // Check if the token is a quoted string (using either single or double quotes)
-        else if (
-          (token.startsWith('"') && token.endsWith('"')) ||
-          (token.startsWith("'") && token.endsWith("'"))
-        ) {
-          // Remove the surrounding quotes
-          let str = token.substring(1, token.length - 1);
-          stack.push(str);
+        // if token is not a command push it, treat it as string data 
+        else if (! commands.hasOwnProperty(token)) {
+          stack.push(token);
         }
         // Otherwise, if the token matches a known command, execute it
-        else if (commands[token]) {
+        else if (typeof(commands[token]) == 'function') {
           commands[token]();
         }
         // If the token is not recognized, log a warning
@@ -545,11 +464,19 @@ Sexel.tag('sexel-button',['label','action','image'],{
         }
       });
     }
-  }
-
-  // Register the custom element with the browser
-  customElements.define('sexel-canvas', SexelCanvas);
+  })
 </script>
+
+<style>
+.sexel-canvas {
+	border: none;
+	max-width: 100%;
+	padding: 0px;
+}
+</style>
+<template id="sexel-canvas">
+<canvas class="sexel-canvas" id="canvas"></canvas>
+</template>
 <script>
     Sexel.tag('sexel-card', ['header'], {
         ondraw: (self) => {
@@ -583,7 +510,7 @@ cursor: default;
 font-size: 18px;
 font-weight: bold;
 padding: 10px;
-background-color: #f4f4f4;
+background-color: none;
 border-bottom: 1px solid #ccc;
 }
 
@@ -658,7 +585,7 @@ display: flex;
 
 <script>
     // Define the 'sexel-chart' component using the Sexel framework
-    Sexel.tag('sexel-chart', ['type','labels','data','key'], {
+    Sexel.tag('sexel-chart', ['type','labels','data','blurb','legend'], {
         ondraw: (self) => {
             const chartContainer = self.querySelector('#chart-container');
             chartContainer.innerHTML = '';  // Clear any previous chart
@@ -668,14 +595,11 @@ display: flex;
             chartContainer.appendChild(canvas);
 
             // Get data, labels, and colors
-	    console.log( "key", self.key())
-	    console.log( "data", self.data())
-	    console.log( "labels", self.labels())
-	    console.log( "type", self.type())
-	    const chartTitle = self.key() ? self.key() : false
+	    const chartTitle = self.blurb() ? JSON.parse(self.blurb()) : { display: false }
             const chartData = JSON.parse(self.data());  	// Parse the data string into an array of objects
             const chartType = self.type() || 'bar';  // Default chart type is 'bar'
 	    const chartLabels = self.labels() ? JSON.parse(self.labels()) : []
+	    const chartLegend = self.legend() ? JSON.parse(self.legend()) : { display: false  }
 
             // Prepare the chart configuration
             const config = {
@@ -692,13 +616,8 @@ display: flex;
                         }
                     },
 		    plugins: {
-			    legend: {
-				position: 'bottom'
-			    },	
-			    title: {
-				display : true, // chartTitle ? true : false,
-				text: chartTitle
-			    }
+			    legend: chartLegend,
+			    title: chartTitle,
 		   }
   		
 		}
@@ -882,8 +801,8 @@ background-color: rgb(220, 220, 220);
         <div class="chat-history" id="chat-history"></div>
         <div class="chat-input-area">
             <textarea id="message-input" class="message-input" placeholder="Type your message..."></textarea>
-            <input type="file" id="upload-button" class="upload-button" title="Upload a file" />
             <button id="unicode-button" class="unicode-button">☺</button>
+            <input type="file" id="upload-button" class="upload-button" title="Upload a file" />
             <button id="download-button" class="download-button">Download Log</button>
         </div>
         <div class="unicode-grid" id="unicode-grid">
@@ -1274,10 +1193,11 @@ background-color: rgb(220, 220, 220);
 
 <script>
     // Define the 'sexel-footer' component using the Sexel framework
-    Sexel.tag('sexel-footer', [], {
+    Sexel.tag('sexel-footer', ['blurb'], {
         ondraw: (self) => {
             const footer = self.querySelector('#sexel-footer');
-            footer.textContent = "© 2024 David J. Goehrig <dave@dloh.org> - All Rights Reserved";  // Example footer content
+	    const blurb = self.blurb() ? self.blurb() : "© 2025 David J. Goehrig <dave@dloh.org> - All Rights Reserved";  // Example footer content
+	    footer.textContent = blurb
         }
     });
 </script>

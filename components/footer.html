@@ -1,9 +1,10 @@
 <script>
     // Define the 'sexel-footer' component using the Sexel framework
-    Sexel.tag('sexel-footer', [], {
+    Sexel.tag('sexel-footer', ['blurb'], {
         ondraw: (self) => {
             const footer = self.querySelector('#sexel-footer');
-            footer.textContent = "© 2024 David J. Goehrig <dave@dloh.org> - All Rights Reserved";  // Example footer content
+	    const blurb = self.blurb() ? self.blurb() : "© 2025 David J. Goehrig <dave@dloh.org> - All Rights Reserved";  // Example footer content
+	    footer.textContent = blurb
         }
     });
 </script>
