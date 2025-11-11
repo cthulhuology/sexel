@@ -1,6 +1,6 @@
 <script>
     // Define the 'sexel-chart' component using the Sexel framework
-    Sexel.tag('sexel-chart', ['data', 'key', 'type', 'colors'], {
+    Sexel.tag('sexel-chart', ['type','labels','data','key'], {
         ondraw: (self) => {
             const chartContainer = self.querySelector('#chart-container');
             chartContainer.innerHTML = '';  // Clear any previous chart
@@ -10,23 +10,21 @@
             chartContainer.appendChild(canvas);
 
             // Get data, labels, and colors
-            const chartData = JSON.parse(self.data());  // Parse the data string into an array
-            const chartLabels = self.key() ? JSON.parse(self.key()) : [];  // Parse the key string into an array if provided
+	    console.log( "key", self.key())
+	    console.log( "data", self.data())
+	    console.log( "labels", self.labels())
+	    console.log( "type", self.type())
+	    const chartTitle = self.key() ? self.key() : false
+            const chartData = JSON.parse(self.data());  	// Parse the data string into an array of objects
             const chartType = self.type() || 'bar';  // Default chart type is 'bar'
-            const chartColors = self.colors() ? JSON.parse(self.colors()) : [];  // Parse the colors if provided
+	    const chartLabels = self.labels() ? JSON.parse(self.labels()) : []
 
             // Prepare the chart configuration
             const config = {
                 type: chartType,  // Chart type (bar, line, pie, etc.)
                 data: {
                     labels: chartLabels,
-                    datasets: [{
-                        label: 'Dataset',
-                        data: chartData,
-                        backgroundColor: chartColors,  // Apply background colors
-                        borderColor: chartColors.map(color => color),  // Use same colors for borders
-                        borderWidth: 1
-                    }]
+                    datasets: chartData,
                 },
                 options: {
                     responsive: true,
@@ -34,8 +32,18 @@
                         y: {
                             beginAtZero: true
                         }
-                    }
-                }
+                    },
+		    plugins: {
+			    legend: {
+				position: 'bottom'
+			    },	
+			    title: {
+				display : true, // chartTitle ? true : false,
+				text: chartTitle
+			    }
+		   }
+  		
+		}
             };
 
             // Create the chart using Chart.js
