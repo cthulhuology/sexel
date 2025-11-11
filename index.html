@@ -212,10 +212,19 @@ SOFTWARE.
 <!-- bar chart -->
 <a id="a_barchart"><h1>Bar Chart</h1></a>
 <sexel-chart  id="barchart"
-    data='[12, 19, 3, 5, 2, 3]' 
-    key='["January", "February", "March", "April", "May", "June"]' 
-    colors='["red","orange","yellow","green","blue","indigo","violet"]'
-    type="bar">
+	key="Tokens Per Second"
+	type="bar"
+	labels='["12:00","12:10","12:20","12:30","12:40","12:50"]'
+	data='[{
+		"label": "input",
+		"data": [ 100, 80, 34, 22, 200, 121 ],
+		"backgroundColor": "rgb(100,142,174)"	
+	},{
+		"label": "output",
+		"data": [ 200, 73, 53, 35, 100, 38 ],
+		"backgroundColor": "rgb(180,1c2,1f4)"	
+	}]'
+>
 </sexel-chart>
 
 <!-- breadcrumb -->
