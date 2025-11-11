@@ -1,6 +1,6 @@
 <script>
     // Define the 'sexel-rating' component using the Sexel framework
-    Sexel.tag('sexel-rating', ['max', 'value', 'char'], {
+    Sexel.tag('sexel-rating', ['max', 'value', 'char', 'action' ], {
         ondraw: (self) => {
             const ratingContainer = self.querySelector('#rating-container');
             const maxStars = parseInt(self.max()) || 5;  // Default to 5 stars
@@ -24,6 +24,7 @@
                     star.onclick = () => {
                         ratingValue = i;
                         self.value(ratingValue);  // Update the 'value' attribute
+			if (self.action()) fsm(self.action(), ratingValue)
                         renderStars();  // Re-render the stars
                     };
 

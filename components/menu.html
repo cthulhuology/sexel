@@ -7,9 +7,7 @@ Sexel.tag('sexel-menu', ['orientation', 'items'], {
 		container.classList.add(orientation === 'vertical' ? 'vertical' : 'horizontal');
 		container.innerHTML = ''
 		const buttonNames = self.items().split(',');
-		console.log(buttonNames)
 		buttonNames.forEach((name) => {
-			console.log(name)
 			const label = name.trim()
 			const button = document.createElement('button');
 			button.textContent = label

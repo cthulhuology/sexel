@@ -1069,7 +1069,7 @@ background-color: rgb(220, 220, 220);
 
 <script>
     // Define the 'sexel-dialog' component using the Sexel framework
-    Sexel.tag('sexel-dialog', ['okLabel', 'cancelLabel', 'label', 'message'], {
+    Sexel.tag('sexel-dialog', ['okLabel', 'cancelLabel', 'label', 'message', 'okAction', 'cancelAction'], {
         ondraw: (self) => {
             const dialog = self.querySelector('#dialog');
             const okButton = self.querySelector('#ok-button');
@@ -1084,13 +1084,19 @@ background-color: rgb(220, 220, 220);
             dialogMessage.textContent = self.message() || '';  // Default message content
 
             // Function to close the dialog
-            const closeDialog = () => {
+            const closeDialogCancel = () => {
                 dialog.classList.remove('active');  // Hide the dialog
+		if (typeof(self.cancelAction()) == 'string') fsm(self.cancelAction(), self)
+            };
+
+	    const closeDialogOk = () => {
+                dialog.classList.remove('active');  // Hide the dialog
+		if (typeof(self.okAction()) == 'string') fsm(self.okAction(), self)
             };
 
             // Attach event listeners to the buttons
-            cancelButton.onclick = closeDialog;
-            okButton.onclick = closeDialog;
+            cancelButton.onclick = closeDialogCancel;
+            okButton.onclick = closeDialogOk;
 
             // Function to open the dialog
             self.open = () => {
@@ -1536,9 +1542,7 @@ Sexel.tag('sexel-menu', ['orientation', 'items'], {
 		container.classList.add(orientation === 'vertical' ? 'vertical' : 'horizontal');
 		container.innerHTML = ''
 		const buttonNames = self.items().split(',');
-		console.log(buttonNames)
 		buttonNames.forEach((name) => {
-			console.log(name)
 			const label = name.trim()
 			const button = document.createElement('button');
 			button.textContent = label
@@ -2003,7 +2007,7 @@ Sexel.tag('sexel-menu', ['orientation', 'items'], {
 
 <script>
     // Define the 'sexel-rating' component using the Sexel framework
-    Sexel.tag('sexel-rating', ['max', 'value', 'char'], {
+    Sexel.tag('sexel-rating', ['max', 'value', 'char', 'action' ], {
         ondraw: (self) => {
             const ratingContainer = self.querySelector('#rating-container');
             const maxStars = parseInt(self.max()) || 5;  // Default to 5 stars
@@ -2027,6 +2031,7 @@ Sexel.tag('sexel-menu', ['orientation', 'items'], {
                     star.onclick = () => {
                         ratingValue = i;
                         self.value(ratingValue);  // Update the 'value' attribute
+			if (self.action()) fsm(self.action(), ratingValue)
                         renderStars();  // Re-render the stars
                     };
 
@@ -2378,7 +2383,7 @@ Sexel.tag('sexel-sidebar', ['position'], {
 
 <script>
     // Define the 'sexel-slider' component using the Sexel framework
-    Sexel.tag('sexel-slider', ['min', 'max', 'value', 'label'], {
+    Sexel.tag('sexel-slider', ['min', 'max', 'value', 'label', 'action'], {
         ondraw: (self) => {
             const sliderInput = self.querySelector('#slider-input');
             const sliderValueLabel = self.querySelector('#slider-value');
@@ -2401,6 +2406,7 @@ Sexel.tag('sexel-sidebar', ['position'], {
             sliderInput.oninput = (e) => {
                 const newValue = e.target.value;
                 sliderValueLabel.textContent = `${newValue}`;
+		if (self.action()) fsm(self.action(), newValue)
                 self.value(newValue);  // Update the 'value' attribute
             };
         }

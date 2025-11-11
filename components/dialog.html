@@ -1,6 +1,6 @@
 <script>
     // Define the 'sexel-dialog' component using the Sexel framework
-    Sexel.tag('sexel-dialog', ['okLabel', 'cancelLabel', 'label', 'message'], {
+    Sexel.tag('sexel-dialog', ['okLabel', 'cancelLabel', 'label', 'message', 'okAction', 'cancelAction'], {
         ondraw: (self) => {
             const dialog = self.querySelector('#dialog');
             const okButton = self.querySelector('#ok-button');
@@ -15,13 +15,19 @@
             dialogMessage.textContent = self.message() || '';  // Default message content
 
             // Function to close the dialog
-            const closeDialog = () => {
+            const closeDialogCancel = () => {
                 dialog.classList.remove('active');  // Hide the dialog
+		if (typeof(self.cancelAction()) == 'string') fsm(self.cancelAction(), self)
+            };
+
+	    const closeDialogOk = () => {
+                dialog.classList.remove('active');  // Hide the dialog
+		if (typeof(self.okAction()) == 'string') fsm(self.okAction(), self)
             };
 
             // Attach event listeners to the buttons
-            cancelButton.onclick = closeDialog;
-            okButton.onclick = closeDialog;
+            cancelButton.onclick = closeDialogCancel;
+            okButton.onclick = closeDialogOk;
 
             // Function to open the dialog
             self.open = () => {

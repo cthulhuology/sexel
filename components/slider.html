@@ -1,6 +1,6 @@
 <script>
     // Define the 'sexel-slider' component using the Sexel framework
-    Sexel.tag('sexel-slider', ['min', 'max', 'value', 'label'], {
+    Sexel.tag('sexel-slider', ['min', 'max', 'value', 'label', 'action'], {
         ondraw: (self) => {
             const sliderInput = self.querySelector('#slider-input');
             const sliderValueLabel = self.querySelector('#slider-value');
@@ -23,6 +23,7 @@
             sliderInput.oninput = (e) => {
                 const newValue = e.target.value;
                 sliderValueLabel.textContent = `${newValue}`;
+		if (self.action()) fsm(self.action(), newValue)
                 self.value(newValue);  // Update the 'value' attribute
             };
         }

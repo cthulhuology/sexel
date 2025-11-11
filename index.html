@@ -339,6 +339,27 @@ data='[
 </sexel-code>
 <p>The date component displays a date picker and the picked date.  It has an optional datestamp attribute to set the date to other than today's.</p>
 
+
+<a onclick='fsm("displayDialog")'><h2>dialog</h2></a>
+<sexel-code language="html">
+&lt;sexel-dialog  id="dialog"
+    okLabel="Confirm" 
+    cancelLabel="Dismiss" 
+    label="Confirmation Required"
+    message="Are you sure you want to proceed with this action?"&gt;
+&lt;/sexel-dialog&gt;
+</sexel-code>
+<p>The dialog component is meant for popup dialogs that have an ok and cancel labels, and each of the buttons can have an associated
+okAction or cancelAction to specify which FSM state to invoke.  The default behavior for each is just to hide the dialog.
+</p>
+
+
+<a href="#a_footer"><h2>footer</h2></a>
+<sexel-code language="html">
+&lt;sexel-footer id="footer"&gt;&lt;/sexel-footer&gt;
+</sexel-code>
+<p>The footer component show the footer as seen on this page. You can change the text blurb by setting that optional attribute </p>
+
 <a href="#a_form"><h2>form</h2></a>
 <sexel-code language="html">
 &lt;sexel-form 
@@ -373,10 +394,8 @@ The form also takes an action to invoke in the FSM with the submitted values.
 &lt;/sexel-chart&gt;
 </sexel-code>
 <p>The chart component can also be used to create line charts.  Like with bar charts, the blurb (title), labels, data, and legend 
-take objects followint the <a href="https://chartjs.org">Chart.js</a> documentation.
+take objects following the <a href="https://chartjs.org">Chart.js</a> documentation.
 </p>
-
-
 
 <a href="#a_list"><h2>list</h2></a>
 <sexel-code language="html">
@@ -414,6 +433,124 @@ both ordered and unordered lists along with custom decorators for each list leve
 &lt;sexel-auth id="login" label="Sign Up"&gt;&lt;/sexel-auth&gt;
 </sexel-code>
 <p>The auth component is a form for handling user logins, it invokes the "auth" action of the FSM by default.</p>
+
+<a href="#a_menu"><h2>menu</h2></a>
+<sexel-code language="html">
+&lt;sexel-menu 
+    orientation="horizontal" 
+    items="Home, About, Services, Contact"&gt;
+&lt;/sexel-menu&gt;
+
+&lt;sexel-menu 
+    orientation="vertical" 
+    items="Dashboard, Profile, Settings, Logout"&gt;
+&lt;/sexel-menu&gt;
+</sexel-code>
+<p>The menu component produces both horizontal and vertical menus based on the orientation attribute.  Each takes a list of 
+items and creates a bunch of buttons.  Each button triggers the FSM action of the same name as the menu item.</p>
+
+<a href="#a_notification"><h2>notification</h2></a>
+<sexel-code language="html">
+&lt;sexel-notification id="notification"
+    title="Error" 
+    message="An error occurred. Please try again." 
+    type="error" 
+    dismissable="true"&gt;
+&lt;/sexel-notification&gt;
+</sexel-code>
+<p>The notification component displays a color coded message based on the type attribute.  It supports they typical
+notifation types: error, warning, info, success.
+</p>
+
+<a href="#a_piechart"><h2>pie chart</h2></a>
+<sexel-code language="html">
+&lt;sexel-chart  id="piechart"
+    labels='[ "male", "female" ]'
+    data='[{
+		"data": [ 30, 70 ],
+		"backgroundColor": [ 
+			"rgb(100,142,174)",	
+			"rgb(255,212,244)" 
+		]
+	}]'
+    type="pie"&gt;
+&lt;/sexel-chart&gt;
+</sexel-code>
+<p>The chart component can also be used to create pie charts.  Like with bar charts, the blurb (title), labels, data, and legend 
+take objects following the <a href="https://chartjs.org">Chart.js</a> documentation.</p>
+
+<a href="#a_progress"><h2>progress bar</h2></a>
+<sexel-code language="html">
+&lt;sexel-progress 
+	id="progress" 
+	value="30" 
+	max="100" 
+	label="30% Complete"&gt;
+&lt;/sexel-progress&gt;
+</sexel-code>
+<p>The progress bar component displays a value and a label from zero to max.</p>
+
+<a href="#a_rating"><h2>rating</h2></a>
+<sexel-code language="html">
+&lt;sexel-rating max="5" value="3"&gt;&lt;/sexel-rating&gt;
+&lt;sexel-rating max="7" value="4" char="♥"&gt;&lt;/sexel-rating&gt;
+</sexel-code>
+<p>The rating component provides a basic 5 star rating setup, but also has the ability to change the size and specify an alternative
+character for display. If the action attribute is specified with will invoke the FSM action with the new rating.
+</p>
+
+<a href="#a_search"><h2>search</h2></a>
+<sexel-code language="html">
+&lt;sexel-search placeholder="Enter your query" action="performSearch"&gt;&lt;/sexel-search&gt;
+</sexel-code>
+<p>The search component is just a search box with a FSM action.</p>
+
+
+<a href="#a_slider"><h2>slider</h2></a>
+<sexel-code language="html">
+&lt;sexel-slider min="0" max="100" value="75" label="Volume"&gt;&lt;/sexel-slider&gt;
+&lt;sexel-slider min="0" max="10" value="5" label="Brightness"&gt;&lt;/sexel-slider&gt;
+</sexel-code>
+<p>The slider component divides the bar between min and max steps and a default value.  If you attach an action to it, the FMS action
+will be invoked on value chagne.  You can specify a label and an initial value as well.
+</p>
+
+<a href="#a_spinner"><h2>spinner</h2></a>
+<sexel-code language="html">
+&lt;sexel-spinner shown="true"&gt;&lt;/sexel-spinner&gt;
+</sexel-code>
+<p>This is a spinner component. The shown attribute controls visibility.</p>
+
+<a href="#a_tabs"><h2>tabs</h2></a>
+<sexel-code language="html">
+&lt;sexel-tabs 
+    tabs='[
+        { "label": "Tab 1", "color": "#e7f3fe", "content": "<p>Content for Tab 1</p>" },
+        { "label": "Tab 2", "color": "#e6ffed", 
+	  "content": "&lt;sexel-button label=\"Click Me\" action=\"Home\"&gt;&lt;/sexel-button&gt;" },
+        { "label": "Tab 3", "color": "#fff3cd", "content": "<img src=\"images/sexel.png\" width=64 height=64>" }
+    ]'&gt;
+&lt;/sexel-tabs&gt;
+</sexel-code>
+<p>The tabs component is a sort of modal diaglog box that is data driven.  The content of the tab is typically provided programmatically, and encoded as escaped HTML.  Changing tabs doesn't currently have an action associated, but may in the future.</p>
+
+<a href="#a_upload"><h2>upload</h2></a>
+<sexel-code language="html">
+&lt;sexel-upload 
+	id="fileUploader" 
+	label="Select Files" 
+	multiple="true" 
+	accept=".png,.jpg,.jpeg,.pdf"&gt;
+&lt;/sexel-upload&gt;
+</sexel-code>
+<p>The upload component allows you to specify a list of file extensions you'll accept, and if you allow multiple files or just one.
+Typically, one needs another form to process the actual upload.</p>
+
+<a href="#a_video"><h2>video</h2></a>
+<sexel-code language="html">
+&lt;sexel-video src="https://www.w3schools.com/html/mov_bbb.mp4" controls="true"&gt;&lt;/sexel-video&gt;
+</sexel-code>
+<p>The video component plays basic video playback, you can enable or disable native controls.</p>
 
 <!-- END OF COMPONENT DOCS -->
 
