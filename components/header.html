@@ -20,9 +20,9 @@ Sexel.tag('sexel-header', ['logo','value'], {
 .sexel-header {
 	display: flex;
 	align-items: center;
-	background-color: #f9f9f9;
+	background-color: var(--base-body-color);
 	padding: 10px 20px;
-	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+	box-shadow: var(--base-shadow);
 	width: 100%;
 	justify-content: space-between;
 }
@@ -36,7 +36,7 @@ Sexel.tag('sexel-header', ['logo','value'], {
 #value {
 	font-weight: bold;
 	font-size: 32px;
-	color: #333;
+	color: var(--base-text);
 }
 
 #left-content {
