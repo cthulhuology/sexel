@@ -1,13 +1,15 @@
 html {
-	line-height: 1.15; /* 1 */
-	-webkit-text-size-adjust: 100%; /* 2 */
+	line-height: var(--base-line-height);
+	-webkit-text-size-adjust: 100%;
 }
 
 body {
-	font-family: 'Arial', sans-serif; /* Sans-serif font */
-	font-size: 12px;
-	font-weight: normal;
+	font-family: var(--base-font-family);
+	font-size: var(--base-font-size);
+	font-weight: var(--base-font-weight);
 	margin: 0;
+	background-color: var(--base-body-color);
+	color: var(--base-text);
 }
 
 main {
@@ -15,31 +17,36 @@ main {
 }
 
 h1 {
-	font-size: 24px;
+	font-size: var(--h1-font-size);
 	font-weight: bold;
 	margin: 0.67em 0;
-	border-bottom: 3px solid rgb(64, 105, 138);
+	border-bottom: var(--h1-border);
 }
 
 h2 {
-	font-size: 20px;
+	font-size: var(--h2-font-size);
 	font-weight: bold;
+	border-bottom: var(--h2-border);
 }
 
 h3 {
-	font-size: 18px;
+	font-size: var(--h3-font-size);
 	font-weight: bold;
+	border-bottom: var(--h3-border);
 }
 
 h4 {
-	font-size: 16px;
+	font-size: var(--h4-font-size);
 	font-weight: bold;
+	border-bottom: var(--h4-border);
 }
 
 h5 {
-	font-size: 14px;
+	font-size: var(--h5-font-size);
 	font-weight: bold;
+	border-bottom: var(--h5-border);
 }
+
 hr {
 	box-sizing: content-box; /* 1 */
 	height: 0; /* 1 */
@@ -106,6 +113,8 @@ textarea {
 	font-size: 100%; 
 	line-height: 1.15;
 	margin: 0; 
+	background-color: var(--base-background);
+	color: var(--base-text);
 }
 
 button,
@@ -114,7 +123,7 @@ input {
 }
 
 input:is(:-webkit-autofill, :autofill) {
-	box-shadow: 0 0 0 100px rgb(250,250,255) inset;	
+	box-shadow: var(--input-box-shadow);
 	filter: none;
 }
 
@@ -207,81 +216,38 @@ template {
 	display: none;
 }
 
-.shadow {
-	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-}
-
-#content{
-	margin: 10px 5% 5% 20px;
-	width: 40%;
-}
-
-#narrative {
-	margin: 20px 5%;
-	float: right;
-	width: 40%;
-	border-left: 3px solid rgb(64, 105, 138);
-	padding-left: 4em;
-}
-
-#narrative p {
-	font-size: 16px;
-	line-height: 1.2em;
-}
-
 h1 {
 }
 
 a {
-	color:rgb(64, 105, 138);
-	text-decoration: none;
-	font-weight: bold;
+	color: var(--a-color);
+	text-decoration: var(--a-decoration);
+	font-weight: var(--a-font-weight);
 }
 
-
-.header {
-	font-family: 'Arial', sans-serif; /* Sans-serif font */
-	font-size: 24px;
-	font-weight: bold;
-	color: #333;
-}
-
-	
 input {
 	padding: 8px;
 	margin: 8px 0;
-	font-size: 14px;
-	border: 1px solid #ccc;
-	border-radius: 4px;
+	font-size: var(--input-font-size);
+	border: var(--input-border);
+	border-radius: var(--input-border-radius);
 }
 
 button {
 	padding: 10px;
-	border: none;
-	border-radius: 4px;
+	border: var(--button-border);
+	border-radius: var(--button-border-radius);
 	cursor: pointer;
-	font-size: 16px;
-	font-weight: bold;
-	background-color: rgb(100,142,174);
-	color: rgb(250,250,250);
+	font-size: var(--button-font-size);
+	font-weight: var(--button-font-weight);
+	background-color: var(--button-background-color);
+	color: var(--button-color);
 }
 
 button:hover {
-        background-color: rgb(87,101,112);
+        background-color: var(--button-hover-color);
 }
 
 ul {
-	font-size: 18px;
+	font-size: var(--ul-font-size);
 }
-
-.background-black { background-color: rgb(0, 0, 0) }
-.background-darkblue { background-color: rgb(68, 83, 94) }
-.background-midblue { background-color: rgb(64, 105, 138) }
-.background-lightblue { background-color: rgb(87, 101, 112) }
-.background-brightblue { background-color: rgb(100, 142, 174) }
-.background-darkgray { background-color: rgb(125, 139, 149) }
-.background-lightgray { background-color: rgb(152, 167, 177) }
-.background-white { background-color: rgb(255, 255, 255) }
-.text-dark { color: #333 }
-.text-med { color: rgb(96,96,96) }
-.text-light { color: rgb(192,192,192) }

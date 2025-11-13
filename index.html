@@ -9,6 +9,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/javascript.min.js"></script>
 <script>hljs.highlightAll();</script>
 <script type="module" src="sexel.mjs"></script>
+<link rel="stylesheet" href="theme.css" />
 <link rel="stylesheet" href="sexel.css" />
 <link rel="import" href="components.html" />
 <script type="module">
@@ -240,7 +241,9 @@ at: <a href="https://github.com/cthulhuology/sexel">https://github.com/cthulhuol
     300 300 moveTo 
     200 300 lineTo 
     300 200 lineTo 
-    300 300 closePath stroke
+    300 300 closePath 
+    gray setStrokeStyle 
+    stroke
   '&gt;
 &lt;/sexel-canvas&gt;
 </sexel-code>
@@ -267,7 +270,7 @@ at: <a href="https://github.com/cthulhuology/sexel">https://github.com/cthulhuol
 
 <a href="#a_card"><h2>card</h2></a>
 <sexel-code language="html">
-&lt;sexel-card header="Custom Cards"&gt;
+&lt;sexel-card header="Custom Cards" width="400" height="300"&gt;
     &lt;p&gt;This card can contain any HTML content.&lt;/p&gt;
     &lt;sexel-button label="Click Me" action="displayDialog" id="cardButton"&gt;&lt;/sexel-button&gt;
 &lt;/sexel-card&gt;
@@ -618,7 +621,7 @@ SOFTWARE.
 	},{
 		"label": "output",
 		"data": [ 200, 73, 53, 35, 100, 38 ],
-		"backgroundColor": "rgb(180,1c2,1f4)"	
+		"backgroundColor": "rgb(100,100,254)"	
 	}]'
 >
 </sexel-chart>
@@ -643,13 +646,15 @@ SOFTWARE.
     300 300 moveTo 
     200 300 lineTo 
     300 200 lineTo 
-    300 300 closePath stroke
+    300 300 closePath
+    gray setStrokeStyle 
+    stroke
   '>
 </sexel-canvas>
 
 <!-- card -->
 <a id="a_card"><h1>Card</h1></a>
-<sexel-card header="Custom Cards">
+<sexel-card header="Custom Cards" height="300" width="400">
     <p>This card can contain any HTML content.</p>
     <sexel-button label="Click Me" action="displayDialog" id="cardButton"></sexel-button>
 </sexel-card>

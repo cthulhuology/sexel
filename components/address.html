@@ -7,18 +7,17 @@ const t = Sexel.tag('sexel-address',['email','name','address'],{
 .sexel-address {
         display: flex;
         flex-direction: column;
-	background-color: #f9f9f9;
-	font-size: 16px;		
+	background-color: var(--base-background);
+	font-size: var(--base-font-larger);
         width: 400px;
-        border: 1px solid #ccc;
+        border: var(--base-border);
         padding: 16px;
         border-radius: 8px;
-        background-color: #f9f9f9;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+        box-shadow: var(--base-shadow);
 }
 
 .sexel-address textarea {
-	border: 1px solid #ccc;
+	border: var(--input-border);
 	width: 300px;
 	resize: none;
 }

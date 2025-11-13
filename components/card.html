@@ -1,5 +1,5 @@
 <script>
-    Sexel.tag('sexel-card', ['header'], {
+    Sexel.tag('sexel-card', ['header','width','height'], {
         ondraw: (self) => {
             const card = self.querySelector('.card');
             const contentSlot = self.querySelector('#card-content');
@@ -19,20 +19,21 @@
 display: block;
 position: inline;
 width: 300px;
-border: 1px solid #ccc;
-border-radius: 8px;
-box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-background-color: white;
+border: var(--base-border);
+border-radius: var(--base-border-radius);
+box-shadow: var(--base-shadow);
+background-color: var(--base-background);
 padding: 20px;
 cursor: default;
 }
 
-#card-header {
-font-size: 18px;
+.card-header {
+font-size: var(--base-font-largest);
 font-weight: bold;
 padding: 10px;
 background-color: none;
-border-bottom: 1px solid #ccc;
+border-bottom: var(--base-border);
+color: var(--base-color-tint);
 }
 
 [draggable="true"] .card {
@@ -42,7 +43,7 @@ cursor: move;
 
 <template id="sexel-card">
     <div class="card shadow">
-        <div id="card-header"></div>
+        <div id="card-header" class="card-header"></div>
         <div class="card-body" id="card-content"></div>
     </div>
 </template>

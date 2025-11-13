@@ -31,15 +31,15 @@
     .sexel-breadcrumb {
         display: flex;
         align-items: center;
-        font-size: 14px;
+        font-size: var(--base-font-larger);
         padding: 10px;
-        background-color: #f9f9f9;
-        border-radius: 4px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);  /* Subtle shadow */
+        background-color: var(--base-background);
+        border-radius: var(--base-border-radius);
+        box-shadow: var(--base-shadow);
     }
 
     .breadcrumb-item {
-        color: rgb(100, 142, 174);  /* Style each breadcrumb item */
+        color: var(--base-color-tint);
         cursor: pointer;
         font-weight: bold;
     }
@@ -49,7 +49,7 @@
     }
 
     .breadcrumb-separator {
-        color: #333;  /* Separator color */
+        color: var(--base-color-dark);
     }
 </style>
 

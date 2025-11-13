@@ -42,32 +42,31 @@
     /* Basic styling for notification */
     .notification {
         padding: 20px;
-        border-radius: 5px;
         margin: 10px 0;
         position: relative;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        font-family: 'Arial', sans-serif;
+        box-shadow: var(--base-shadow);
+        border-radius: var(--notification-radius);
     }
 
     /* Notification types */
     .notification.info {
-        background-color: #e7f3fe;
-        color: #3178c6;
+        background-color: var(--color-info-background);
+        color: var(--color-info-foreground);
     }
 
     .notification.success {
-        background-color: #e6ffed;
-        color: #27a745;
+        background-color: var(--color-success-background);
+        color: var(--color-success-foreground);
     }
 
     .notification.warning {
-        background-color: #fff3cd;
-        color: #856404;
+        background-color: var(--color-warn-background);
+        color:  var(--color-warn-foreground);
     }
 
     .notification.error {
-        background-color: #f8d7da;
-        color: #721c24;
+        background-color: var(--color-error-background);
+        color: var(--color-error-foreground);
     }
 
     /* Title styling */

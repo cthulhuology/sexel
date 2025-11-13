@@ -7,18 +7,17 @@ const t = Sexel.tag('sexel-address',['email','name','address'],{
 .sexel-address {
         display: flex;
         flex-direction: column;
-	background-color: #f9f9f9;
-	font-size: 16px;		
+	background-color: var(--base-background);
+	font-size: var(--base-font-larger);
         width: 400px;
-        border: 1px solid #ccc;
+        border: var(--base-border);
         padding: 16px;
         border-radius: 8px;
-        background-color: #f9f9f9;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+        box-shadow: var(--base-shadow);
 }
 
 .sexel-address textarea {
-	border: 1px solid #ccc;
+	border: var(--input-border);
 	width: 300px;
 	resize: none;
 }
@@ -99,24 +98,24 @@ const t = Sexel.tag('sexel-address',['email','name','address'],{
         align-items: center;
         gap: 10px;
         padding: 10px;
-        border: 1px solid #ccc;
+        border: var(--base-border);
         border-radius: 8px;
-        background-color: #f9f9f9;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        background-color: var(--base-background);
+        box-shadow: var(--basae-shadow);
     }
 
     .audio-button {
-        background-color: rgb(100, 142, 174);
-        color: white;
-        border: none;
-        border-radius: 4px;
+        background-color: var(--button-background-color);
+        color: var(--button-color);
+        border: var(--button-border);
+        border-radius: var(--button-border-radius);
         cursor: pointer;
-        font-size: 14px;
+        font-size: var(--button-font-size);
         padding: 8px 12px;
     }
 
     .audio-button:hover {
-        background-color: rgb(87, 101, 112);
+        background-color: var(--button-hover-color);
     }
 </style>
 
@@ -242,15 +241,15 @@ const t = Sexel.tag('sexel-address',['email','name','address'],{
         top: 60px;  /* Adjust as needed */
         left: 50%;
         transform: translateX(-50%);
-        background-color: #333;
-        color: #fff;
+        background-color: var(--color-dark);
+        color: var(--color-light);
         padding: 10px;
-        border-radius: 5px;
-        font-size: 12px;
+        border-radius: var(--base-border-radius);
+        font-size: var(--base-font-smaller);
         text-align: left;
         z-index: 1000;
         white-space: nowrap;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        box-shadow: var(--base-shadow);
     }
 </style>
 
@@ -296,15 +295,15 @@ const t = Sexel.tag('sexel-address',['email','name','address'],{
     .sexel-breadcrumb {
         display: flex;
         align-items: center;
-        font-size: 14px;
+        font-size: var(--base-font-larger);
         padding: 10px;
-        background-color: #f9f9f9;
-        border-radius: 4px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);  /* Subtle shadow */
+        background-color: var(--base-background);
+        border-radius: var(--base-border-radius);
+        box-shadow: var(--base-shadow);
     }
 
     .breadcrumb-item {
-        color: rgb(100, 142, 174);  /* Style each breadcrumb item */
+        color: var(--base-color-tint);
         cursor: pointer;
         font-weight: bold;
     }
@@ -314,7 +313,7 @@ const t = Sexel.tag('sexel-address',['email','name','address'],{
     }
 
     .breadcrumb-separator {
-        color: #333;  /* Separator color */
+        color: var(--base-color-dark);
     }
 </style>
 
@@ -482,7 +481,7 @@ Sexel.tag('sexel-button',['label','action','image'],{
 <canvas class="sexel-canvas" id="canvas"></canvas>
 </template>
 <script>
-    Sexel.tag('sexel-card', ['header'], {
+    Sexel.tag('sexel-card', ['header','width','height'], {
         ondraw: (self) => {
             const card = self.querySelector('.card');
             const contentSlot = self.querySelector('#card-content');
@@ -502,20 +501,21 @@ Sexel.tag('sexel-button',['label','action','image'],{
 display: block;
 position: inline;
 width: 300px;
-border: 1px solid #ccc;
-border-radius: 8px;
-box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-background-color: white;
+border: var(--base-border);
+border-radius: var(--base-border-radius);
+box-shadow: var(--base-shadow);
+background-color: var(--base-background);
 padding: 20px;
 cursor: default;
 }
 
-#card-header {
-font-size: 18px;
+.card-header {
+font-size: var(--base-font-largest);
 font-weight: bold;
 padding: 10px;
 background-color: none;
-border-bottom: 1px solid #ccc;
+border-bottom: var(--base-border);
+color: var(--base-color-tint);
 }
 
 [draggable="true"] .card {
@@ -525,7 +525,7 @@ cursor: move;
 
 <template id="sexel-card">
     <div class="card shadow">
-        <div id="card-header"></div>
+        <div id="card-header" class="card-header"></div>
         <div class="card-body" id="card-content"></div>
     </div>
 </template>
@@ -905,7 +905,7 @@ background-color: rgb(220, 220, 220);
         font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
 	padding: 10px;
         border-radius: 5px;
-        background-color: #f4f4f4;
+        background-color: var(--base-background);
         overflow-x: auto;
 
     }
@@ -1763,32 +1763,31 @@ Sexel.tag('sexel-menu', ['orientation', 'items'], {
     /* Basic styling for notification */
     .notification {
         padding: 20px;
-        border-radius: 5px;
         margin: 10px 0;
         position: relative;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        font-family: 'Arial', sans-serif;
+        box-shadow: var(--base-shadow);
+        border-radius: var(--notification-radius);
     }
 
     /* Notification types */
     .notification.info {
-        background-color: #e7f3fe;
-        color: #3178c6;
+        background-color: var(--color-info-background);
+        color: var(--color-info-foreground);
     }
 
     .notification.success {
-        background-color: #e6ffed;
-        color: #27a745;
+        background-color: var(--color-success-background);
+        color: var(--color-success-foreground);
     }
 
     .notification.warning {
-        background-color: #fff3cd;
-        color: #856404;
+        background-color: var(--color-warn-background);
+        color:  var(--color-warn-foreground);
     }
 
     .notification.error {
-        background-color: #f8d7da;
-        color: #721c24;
+        background-color: var(--color-error-background);
+        color: var(--color-error-foreground);
     }
 
     /* Title styling */
