@@ -1,7 +1,6 @@
 /* sexel theme */
 
 :root {
-
 	--base-line-height: 		1.15;
 	--base-font-family: 		'Arial', sans-serif;
 	--base-font-smaller: 		12px;
@@ -72,7 +71,6 @@
 	--color-success-foreground:	#27a745;
 
 	--notification-radius:		5px;
-
 }
 
 @media screen and (prefers-color-scheme: dark) {

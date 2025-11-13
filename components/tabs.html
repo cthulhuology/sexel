@@ -48,36 +48,35 @@
     .tabs-container {
         display: flex;
         border-bottom: 2px solid #ccc;
-        margin-bottom: 10px;
     }
 
     .tab-button {
         padding: 10px 40px;
         border: none;
         cursor: pointer;
-        font-family: 'Arial', sans-serif;
-        font-size: 16px;
+        font-family: var(--base-font-family);
+        font-size: var(--base-font-larger);
         border-radius: 4px 4px 0 0;
         margin-right: 10px;
         outline: none;
-	color: rgb(64,64,64);
+	color: var(--color-medium);
     }
 
     .tab-button.active {
         font-weight: bold;
-        border-bottom: 2px solid white;
+        border-bottom: var(--base-border);
     }
 
     .tab-button:hover {
-        background-color: #f0f0f0;
+        background-color: var(--button-hover-color);
     }
 
     .content-container {
         padding: 20px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        background-color: #fff;
+        border: var(--base-border);
+        border-radius: var(--base-border-radius);
+        box-shadow: var(--base-shadow)
+        background-color: var(--base-background);
     }
 </style>
 
