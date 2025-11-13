@@ -13,6 +13,7 @@
 	--base-background:		#f9f9f9;
 	--base-color:			#ccc;
 	--base-text:			#333;
+	--base-inverse:			#fff;
 	--base-border:			1px solid #ccc;
 	--base-border-radius:		5px;
 	--base-color-tint:		rgb(100, 142, 174);  
@@ -76,7 +77,8 @@
 
 @media screen and (prefers-color-scheme: dark) {
 :root{
-
+	
+	--base-inverse:			var(--color-dark);
 	--base-text:			var(--color-light);
 	--base-color-tint:		var(--color-lightgray);
 	--base-color:			var(--color-brightblue);

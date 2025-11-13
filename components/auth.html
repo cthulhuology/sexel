@@ -19,27 +19,27 @@
         display: flex;
         flex-direction: column;
         width: 300px;
-        border: 1px solid #ccc;
+        border: var(--base-border);
         padding: 16px;
-        border-radius: 8px;
-        background-color: #f9f9f9;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        border-radius: var(--base-border-radius);
+        background-color: var(--base-background);
+        box-shadow: var(--base-shadow);
     }
 
     .sexel-auth input {
     }
 
     .sexel-auth button {
-	background-color: rgb(100,142,174);
-	color: rgb(250,250,250);
+	background-color: var(--button-background-color);
+	color: var(--button-color);
     }
 
     .sexel-auth button:hover {
-        background-color: rgb(87,101,112);
+        background-color: var(--button-hover-color);
     }
 
     .sexel-auth span {
-        color: red;
+        color: var(--color-error-background);
         display: none;
     }
 </style>

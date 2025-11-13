@@ -40,22 +40,25 @@
         flex-direction: column;
         align-items: flex-start;
         margin: 10px 0;
-        font-family: 'Arial', sans-serif;
+        font-family: var(--base-font-family);
+	background-color: var(--base-background);
+        color: var(--base-text);
     }
 
     .sexel-date input {
         padding: 8px;
-        font-size: 14px;
+        font-size: var(--base-font-larger);
         margin-bottom: 10px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        border: var(--base-border);
+        border-radius: var(--base-border-radius);
+        box-shadow: var(--base-shadow);
+        color: var(--base-text);
     }
 
     .sexel-date-display {
-        font-size: 14px;
-        font-weight: bold;
-        color: #333;
+        font-size: var(--base-font-larger);
+        font-weight: bold; 
+        color: var(--base-text);
     }
 </style>
 

@@ -127,6 +127,11 @@ input:is(:-webkit-autofill, :autofill) {
 	filter: none;
 }
 
+input[type="file"] {
+	border: none;
+	display: none;
+}
+
 button,
 select {
 	text-transform: none;
