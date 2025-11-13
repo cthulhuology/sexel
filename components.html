@@ -10,7 +10,6 @@ const t = Sexel.tag('sexel-address',['email','name','address'],{
 	background-color: var(--base-background);
 	font-size: var(--base-font-larger);
         width: 400px;
-        border: var(--base-border);
         padding: 16px;
         border-radius: 8px;
         box-shadow: var(--base-shadow);
@@ -100,7 +99,6 @@ const t = Sexel.tag('sexel-address',['email','name','address'],{
         align-items: center;
         gap: 10px;
         padding: 10px;
-        border: var(--base-border);
         border-radius: 8px;
         background-color: var(--base-background);
         box-shadow: var(--basae-shadow);
@@ -153,7 +151,6 @@ const t = Sexel.tag('sexel-address',['email','name','address'],{
         display: flex;
         flex-direction: column;
         width: 300px;
-        border: var(--base-border);
         padding: 16px;
         border-radius: var(--base-border-radius);
         background-color: var(--base-background);
@@ -505,7 +502,6 @@ Sexel.tag('sexel-button',['label','action','image'],{
 display: block;
 position: inline;
 width: 300px;
-border: var(--base-border);
 border-radius: var(--base-border-radius);
 box-shadow: var(--base-shadow);
 background-color: var(--base-background);
@@ -737,19 +733,18 @@ display: flex;
 flex-direction: column;
 width: 100%;
 height: 400px;
-border: 1px solid #ccc;
 border-radius: 8px;
 background-color: var(--base-background);
-box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+box-shadow: var(--base-shadow);
 }
 
 .chat-history {
 flex: 1;
 padding: 10px;
 overflow-y: auto;
-border-bottom: 1px solid #ccc;
-font-family: 'Arial', sans-serif;
-font-size: 14px;
+border-bottom: var(--base-border);
+font-family: var(--base-font-family);
+font-size: var(--base-font-larger);
 white-space: pre-wrap;
 }
 
@@ -892,7 +887,6 @@ background-color: var(--base-background);
         font-weight: bold;
         padding: 10px;
         background-color: var(--base-background);
-        border: var(--base-border);
         border-radius: var(--base-border-radius);
         text-align: center;
         box-shadow: var(--base-shadow);
@@ -1991,7 +1985,6 @@ Sexel.tag('sexel-menu', ['orientation', 'items'], {
         flex-direction: column;
         width: 100%;
         max-width: 500px;
-        border: var(--base-border);
         border-radius: var(--base-border-radius);
         background-color: var(--base-background);
         padding: 10px;
@@ -2123,7 +2116,6 @@ Sexel.tag('sexel-menu', ['orientation', 'items'], {
         align-items: center;
         margin: 10px;
         padding: 8px;
-        border: var(--base-border);
         border-radius: var(--base-border-radius);
         background-color: var(--base-background);
         box-shadow: var(--base-shadow);
@@ -2777,7 +2769,6 @@ Sexel.tag('sexel-sidebar', ['position'], {
         display: flex;
         flex-direction: column;
         width: 300px;
-        border: var(--base-border);
         padding: 16px;
         border-radius: var(--base-border-radius);
         background-color: var(--base-background);
@@ -2801,7 +2792,7 @@ Sexel.tag('sexel-sidebar', ['position'], {
     }
 
     .sexel-upload label:hover {
-        background-color: var(--button-hover-color);
+        background-color: var(--button-hover-colo-r);
     }
 
     .sexel-upload ul {
