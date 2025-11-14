@@ -98,6 +98,7 @@ current list available on this page are:
 <li><a href="#a_chat">chat</a></li>
 <li><a href="#a_clock">clock</a></li>
 <li><a href="#a_code">code</a></li>
+<li><a href="#a_color">color</a></li>
 <li><a href="#a_data">data table</a></li>  
 <li><a href="#a_date">date</a></li>  
 <li><a href="#a_dialog" onclick='fsm("displayDialog")'>dialog</a></li>
@@ -319,6 +320,12 @@ to use the user's locale specific format, defaulting to en-US.</p>
 &lt;/sexel-code&gt;
 </sexel-code>
 <p>The code component displays source code using <a href="https://highlightjs.org">Highlight.js</a> for syntax highlighting.</p>
+
+<a href="#a_color"><h2>color</h2></a>
+<sexel-code language="html">
+&lt;sexel-color action="setColor" height="300" width="300" &gt;&lt;/sexel-color&gt;
+</sexel-code>
+<p>A color picker component that can trigger the given action when the color is selected. NB: uses HSV to compute the RGB values.</p>
 
 <a href="#a_data"><h2>data</h2></a>
 <sexel-code language="html">
@@ -690,6 +697,10 @@ SOFTWARE.
         console.log("Hello, world!");
     }
 </sexel-code>
+
+<!-- color -->
+<a id="a_color"><h1>Color</h1></a>
+<sexel-color action="setColor" height="300" width="300"></sexel-color>
 
 <!-- data table -->
 <a id="a_data"><h1>Data</h1></a>
