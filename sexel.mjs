@@ -144,7 +144,7 @@ export const sexp = function (proto) {
 
 export const handler = function(E) {
 	var S = sexp(E)
-	return window.fsm = (...M) => { return S.apply(null,M) }
+	return window._ = (...M) => { return S.apply(null,M) }
 }
 
 // Work around for missing import link type, should work on most browsers

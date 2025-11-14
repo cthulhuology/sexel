@@ -24,7 +24,7 @@
                     star.onclick = () => {
                         ratingValue = i;
                         self.value(ratingValue);  // Update the 'value' attribute
-			if (self.action()) fsm(self.action(), ratingValue)
+			if (self.action()) _(self.action(), ratingValue)
                         renderStars();  // Re-render the stars
                     };
 

@@ -130,7 +130,7 @@ Sexel.tag('sexel-color',['height','width','action','h','s','v'],{
 			e.preventDefault()
 			if (dragging) {
 				const { r,g,b} = hsv2rgb(self.h(),self.s(),self.v())
-				fsm(self.action(), self, { r: r.toFixed(0), g: g.toFixed(0), b: b.toFixed(0) })
+				_(self.action(), self, { r: r.toFixed(0), g: g.toFixed(0), b: b.toFixed(0) })
 			}
 			dragging = false	// mouse up stop changing
 		})

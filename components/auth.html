@@ -9,7 +9,7 @@
             e.preventDefault()
 	    const user = self.querySelector("#user").value
 	    const password = self.querySelector("#password").value
-	    fsm(self.action() || "auth",self, { user,password })
+	    _(self.action() || "auth",self, { user,password })
         }
     });
 </script>

@@ -17,12 +17,12 @@
             // Function to close the dialog
             const closeDialogCancel = () => {
                 dialog.classList.remove('active');  // Hide the dialog
-		if (typeof(self.cancelAction()) == 'string') fsm(self.cancelAction(), self)
+		if (typeof(self.cancelAction()) == 'string') _(self.cancelAction(), self)
             };
 
 	    const closeDialogOk = () => {
                 dialog.classList.remove('active');  // Hide the dialog
-		if (typeof(self.okAction()) == 'string') fsm(self.okAction(), self)
+		if (typeof(self.okAction()) == 'string') _(self.okAction(), self)
             };
 
             // Attach event listeners to the buttons

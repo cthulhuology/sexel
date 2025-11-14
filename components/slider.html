@@ -23,7 +23,7 @@
             sliderInput.oninput = (e) => {
                 const newValue = e.target.value;
                 sliderValueLabel.textContent = `${newValue}`;
-		if (self.action()) fsm(self.action(), newValue)
+		if (self.action()) _(self.action(), newValue)
                 self.value(newValue);  // Update the 'value' attribute
             };
         }

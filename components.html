@@ -141,7 +141,7 @@ const t = Sexel.tag('sexel-address',['email','name','address'],{
             e.preventDefault()
 	    const user = self.querySelector("#user").value
 	    const password = self.querySelector("#password").value
-	    fsm(self.action() || "auth",self, { user,password })
+	    _(self.action() || "auth",self, { user,password })
         }
     });
 </script>
@@ -324,7 +324,7 @@ const t = Sexel.tag('sexel-address',['email','name','address'],{
 
 <script>
 Sexel.tag('sexel-button',['label','action','image'],{
-	onclick: (self,e) => { fsm(self.action(),self,e) },
+	onclick: (self,e) => { _(self.action(),self,e) },
 })
 </script>
 <style>
@@ -1066,7 +1066,7 @@ Sexel.tag('sexel-color',['height','width','action','h','s','v'],{
 			e.preventDefault()
 			if (dragging) {
 				const { r,g,b} = hsv2rgb(self.h(),self.s(),self.v())
-				fsm(self.action(), self, { r: r.toFixed(0), g: g.toFixed(0), b: b.toFixed(0) })
+				_(self.action(), self, { r: r.toFixed(0), g: g.toFixed(0), b: b.toFixed(0) })
 			}
 			dragging = false	// mouse up stop changing
 		})
@@ -1295,12 +1295,12 @@ Sexel.tag('sexel-color',['height','width','action','h','s','v'],{
             // Function to close the dialog
             const closeDialogCancel = () => {
                 dialog.classList.remove('active');  // Hide the dialog
-		if (typeof(self.cancelAction()) == 'string') fsm(self.cancelAction(), self)
+		if (typeof(self.cancelAction()) == 'string') _(self.cancelAction(), self)
             };
 
 	    const closeDialogOk = () => {
                 dialog.classList.remove('active');  // Hide the dialog
-		if (typeof(self.okAction()) == 'string') fsm(self.okAction(), self)
+		if (typeof(self.okAction()) == 'string') _(self.okAction(), self)
             };
 
             // Attach event listeners to the buttons
@@ -1501,7 +1501,7 @@ Sexel.tag('sexel-color',['height','width','action','h','s','v'],{
 			values[input.name] = input.value
 		})
 		console.log(self.action(),values)
-                fsm(self.action(), values); // Invoke the fsm action
+                _(self.action(), values); // Invoke the fsm action
             }
         }
     });
@@ -1756,7 +1756,7 @@ Sexel.tag('sexel-menu', ['orientation', 'items'], {
 			const button = document.createElement('button');
 			button.textContent = label
 			button.setAttribute('data-name', label);
-			button.onclick = (e) => fsm(label,self,e)
+			button.onclick = (e) => _(label,self,e)
 			container.appendChild(button)
 		});
 	}
@@ -2238,7 +2238,7 @@ Sexel.tag('sexel-menu', ['orientation', 'items'], {
                     star.onclick = () => {
                         ratingValue = i;
                         self.value(ratingValue);  // Update the 'value' attribute
-			if (self.action()) fsm(self.action(), ratingValue)
+			if (self.action()) _(self.action(), ratingValue)
                         renderStars();  // Re-render the stars
                     };
 
@@ -2290,7 +2290,7 @@ Sexel.tag('sexel-menu', ['orientation', 'items'], {
             // Attach the search action
             searchButton.onclick = (e) => {
                 const query = searchInput.value;
-                fsm(self.action(), query, self, e);  // Use FSM to handle search action
+                _(self.action(), query, self, e);  // Use FSM to handle search action
             };
         }
     });
@@ -2614,7 +2614,7 @@ Sexel.tag('sexel-sidebar', ['position'], {
             sliderInput.oninput = (e) => {
                 const newValue = e.target.value;
                 sliderValueLabel.textContent = `${newValue}`;
-		if (self.action()) fsm(self.action(), newValue)
+		if (self.action()) _(self.action(), newValue)
                 self.value(newValue);  // Update the 'value' attribute
             };
         }

@@ -11,7 +11,7 @@
             // Attach the search action
             searchButton.onclick = (e) => {
                 const query = searchInput.value;
-                fsm(self.action(), query, self, e);  // Use FSM to handle search action
+                _(self.action(), query, self, e);  // Use FSM to handle search action
             };
         }
     });
