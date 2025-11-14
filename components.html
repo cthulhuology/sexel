@@ -935,6 +935,192 @@ background-color: var(--base-background);
 
 
 <script>
+function hsv2rgb(h,s,v) {
+	const hc = (h % 1 + 1) % 1 		// clamp to [0,1), hue red == 0 or 1
+	const sc = Math.max(0,Math.min(1,s))	// [0,1] range, saturation
+	const vc = Math.max(0,Math.min(1,v))	// [0,1] range, value
+	const c = vc * sc			// max delta RGB "chroma"
+	const hprime = hc * 6			// [0,6) hue sector
+	const y =  (1 - Math.abs(hprime%2 -1))	// cube coord translation
+	const x = c * y				// scaled channel
+	const l = vc - c			// brightness
+
+	switch(Math.floor(hprime)) {
+	case 0:
+		return { r: (c+l)*255, g: (x+l)* 255, b: l*255 }
+	case 1:
+		return { r: (x+l)*255, g: (c+l)* 255, b: l*255 }
+	case 2:
+		return { r: l*255, g: (c+l)* 255, b: (x+l)*255 }
+	case 3:
+		return { r: l*255, g: (x+l)* 255, b: (c+l)*255 }
+	case 4:
+		return { r: (x+l)*255, g: l*255, b: (c+l)*255 }
+	case 5:
+		return { r: (c+l)*255, g: l*255, b: (x+l)*255 }
+	default:
+		console.error("impossible hprime",hprime)
+		return { r: 0, g: 0, b: 0}
+	}
+}
+
+let connected = false
+
+Sexel.tag('sexel-color',['height','width','action','h','s','v'],{
+	ondraw: (self) => {
+		const canvas = self.querySelector('#colorpicker')
+		canvas.width = self.width() || 300
+		canvas.height = self.height() || 300
+		const ctx = canvas.getContext('2d')
+		const SV_MAX = 255
+		const H_WIDTH = 20
+ 		const SWATCH = 45
+	
+		// draw the SV square
+		const drawSVsquare = () => {
+			const h = self.h()
+			const image = ctx.createImageData(SV_MAX,SV_MAX)	// sv square picker
+			const data = image.data
+			for (let y = 0; y < SV_MAX; y++) {
+				for (let x = 0; x < SV_MAX; x++) {
+					const s = x / SV_MAX			// saturation 0 - 1.0
+					const v = 1 - (y / SV_MAX)		// value 1.0 - 0, black at bottom
+					const { r,g,b } = hsv2rgb(h,s,v)
+					const i = (y * SV_MAX + x) * 4		// index
+					data[i] = r				// red
+					data[i+1] = g				// green
+					data[i+2] = b				// blue
+					data[i+3] = 255				// alpha
+				}
+			}
+			ctx.putImageData(image,0,0)				//  upper left
+		}		
+
+		// draw the hue selector
+		const drawHueBar = () => {
+			const image = ctx.createImageData(H_WIDTH,SV_MAX)	// same height as the sv square
+			const width = canvas.width
+			const data = image.data
+			for (let y = 0; y < SV_MAX; y++) {
+				const h = y / SV_MAX
+				const { r,g,b } = hsv2rgb(h,1,1)		// max hues
+				for (let x = 0; x < H_WIDTH; x++) {
+					const i  = ( y * H_WIDTH + x) * 4	// rgba index
+					data[i] = r
+					data[i+1] = g
+					data[i+2] = b
+					data[i+3] = 255				// alpha
+				}
+			}
+			ctx.putImageData(image,width-H_WIDTH,0)			// draw on right side
+		}
+	
+		// display the current values
+		const drawSwatch = () => {
+			const h = self.h()
+			const s = self.s()
+			const v = self.v()
+			const {r,g,b} = hsv2rgb(h,s,v)
+			ctx.fillStyle = `rgb(${r},${g},${b})`
+			ctx.fillRect(0, self.height() - SWATCH, SWATCH, SWATCH)
+			ctx.fillStyle = 'black'
+			ctx.font = '12px Arial'
+			ctx.fillText(`H: ${Math.round(h*360)}°`, SWATCH + 10, self.height() - SWATCH+15)
+			ctx.fillText(`S: ${(s*100).toFixed(0)}%`, SWATCH + 10, self.height() - SWATCH+30)
+			ctx.fillText(`V: ${(v*100).toFixed(0)}%`, SWATCH + 10, self.height() - SWATCH+45)
+			ctx.fillText(`R: ${r.toFixed(0)}`, SWATCH + 100, self.height() - SWATCH+15)
+			ctx.fillText(`G: ${g.toFixed(0)}`, SWATCH + 100, self.height() - SWATCH+30)
+			ctx.fillText(`B: ${b.toFixed(0)}`, SWATCH + 100, self.height() - SWATCH+45)
+		}
+		
+		// render everything
+		drawSVsquare()		
+		drawHueBar()		
+		drawSwatch()		
+	},
+	onconnect: (self) => {
+		if (connected) return;
+		connected = true
+		console.log("Called on connect")
+		const canvas = self.querySelector('#colorpicker')
+		canvas.width = self.width() || 300
+		canvas.height = self.height() || 300
+		const ctx = canvas.getContext('2d')
+		const SV_MAX = 255
+		const H_WIDTH = 20
+ 		const SWATCH = 45
+	
+
+		const xy = (e) => {
+			return { x: e.clientX - canvas.getBoundingClientRect().left,
+				 y: e.clientY - canvas.getBoundingClientRect().top }
+		}
+
+		const bounds = (x,y,bx,by,bw,bh) => {
+			return (x >= bx && x <= bx+bw) && (y >= by && y <= by+bh)
+			
+		}
+
+		let dragging = false
+		canvas.addEventListener('mouseup', (e) => {
+			e.preventDefault()
+			if (dragging) {
+				const { r,g,b} = hsv2rgb(self.h(),self.s(),self.v())
+				fsm(self.action(), self, { r: r.toFixed(0), g: g.toFixed(0), b: b.toFixed(0) })
+			}
+			dragging = false	// mouse up stop changing
+		})
+
+		const setSV = (x,y) => {
+			dragging = 'sv'
+			self.s( x / SV_MAX )
+			self.v( 1 - (y/SV_MAX))
+		}
+
+		const setH = (x,y) => {
+			dragging = 'h'
+			self.h( y / SV_MAX )
+		}
+
+		canvas.addEventListener('mousedown',(e) => {
+			e.preventDefault()
+			const {x,y} = xy(e)
+			const width = canvas.getBoundingClientRect().width
+			if (bounds(x,y, width-H_WIDTH*2, 0, H_WIDTH*2, SV_MAX)) return setH(x,y)	// give some slop
+			if (bounds(x,y,0,0,SV_MAX,SV_MAX)) return setSV(x,y)
+		})
+
+		canvas.addEventListener('mousemove',(e) => {
+			e.preventDefault()
+			const {x,y} = xy(e)
+			const width = canvas.getBoundingClientRect().width
+			switch(dragging) {
+			case 'sv':
+				if (bounds(x,y,0,0,SV_MAX,SV_MAX)) setSV(x,y)
+				break;
+			case 'h':
+				if (bounds(x,y, width-H_WIDTH*2, 0, H_WIDTH*2, SV_MAX)) setH(x,y)	// give some slop
+				break;
+			default:
+			}
+		})
+	}
+
+})
+</script>
+<style>
+.sexel-color-picker {
+	border: none;
+	max-width: 100%;
+	padding: 10px;
+	cursor: crosshair;
+	background-color: var(--base-background);
+}
+</style>
+<template id="sexel-color">
+<canvas class="sexel-color-picker" id="colorpicker"></canvas>
+</template>
+<script>
     // Define the 'sexel-data' component using Sexel framework
     Sexel.tag('sexel-data', ['header', 'data'], {
         ondraw: (self) => {

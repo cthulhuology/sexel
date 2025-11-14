@@ -1,6 +1,6 @@
 .PHONY:
 
-all: components.html start
+all: components.html
 
 start: components.html
 	node ./app
