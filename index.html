@@ -61,7 +61,7 @@ handler({
 <a id="a_grid"></a>
 <sexel-grid columns="800px 1fr 20px" rows="1fr 100px 100px" gap="40px">
 <div class=".0">
-<span class="header">What is Sexel</span>
+<h2>What is Sexel</h2>
 <p>
 <a href="http://github.com/cthulhuology/sexel">Sexel</a> is a webcomponent framework that makes building
 dynamic distributed web applications easy. Using <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_components">Web Components</a> to build
@@ -79,7 +79,7 @@ approach to managing application state.  And using <a href="https://mesgd.org">m
 messaging, encryption, and authentication natively, you can produce secure
 distributed application out of the box.
 </p>
-<span class="header">What Components are Available?</span>
+<h2>What Components are Available?</h2>
 <p>
 The list of supported components is changing on a regular basis. And writing
 new components is easy enough that even ChatGPT can write them for you! The
@@ -121,7 +121,7 @@ current list available on this page are:
 <li><a href="#a_upload">upload</a></li>
 <li><a href="#a_video">video</a></li>
 </ul>
-<span class="header">Getting Started</span>
+<h2>Getting Started</h2>
 <p>
 <a href="http://github.com/cthulhuology/sexel">Sexel</a> uses HTML5 import links to include components
 on a page.  As long as you include 
@@ -151,6 +151,21 @@ handler({
 })
 </sexel-code>
 <p>
+To send a message to the handler it is done wiht the <b>_</b> function which takes
+arbitrary arguments.  Ususally, the first element passed is the sending component, 
+but it doesn't need to be.
+</p>
+<sexel-code langauge="javascript">
+//  do a mouse handler for my custom okButton
+self.querySelector('#okButton').addEventListener( 'onmousedown', (e) => {
+	_("ok", e)
+})
+</sexel-code>
+<p>The above code sample could invoke the handler's 'ok' state, and the 'OK Pressed' alert
+would be shown as a result. These messages can also be subscribed to by functions using the
+hub.  A common pattern is for websocket connections to send messages directly to the FSM and
+the components are then updated according to the centralized logic.</p>
+<p>
 Some of the components use external 3rd party Javascript Libraries. If you want
 to use the charting components or the code component you should include the following
 in your webpage:
@@ -162,7 +177,7 @@ in your webpage:
 If you would like to get the latest source code of the framework it can be found
 at: <a href="https://github.com/cthulhuology/sexel">https://github.com/cthulhuology/sexel</a>
 </p>
-<span class="header">Component Documentation</span>
+<h1>Component Documentation</h1>
 <p>The following entires show the code of the components to the right</p>
 <a href="#a_address"><h2>address</h2></a>
 <sexel-code langauge="html">
@@ -565,7 +580,7 @@ Typically, one needs another form to process the actual upload.</p>
 <!-- END OF COMPONENT DOCS -->
 
 <hr>
-<span class="header">License</span>
+<h2>License</h2>
 <pre>
 MIT License 
 
